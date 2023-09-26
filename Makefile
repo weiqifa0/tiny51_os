@@ -12,7 +12,7 @@ main.ihx:main.c
 	$(CC) main.c task_scheduling_core.ihx
 
 task_scheduling_core.ihx:task_scheduling_core/task_scheduling_core.c
-	$(CC) -c task_scheduling_core/task_scheduling_core.c
+	$(CC) -c ./task_scheduling_core/task_scheduling_core.c
 
 .PHONY:clean
 clean:
