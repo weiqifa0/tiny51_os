@@ -7,18 +7,16 @@
 #include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
 
-
 /****小小调度器开始**********************************************/
 #define MAXTASKS 2
 static unsigned char timers[MAXTASKS];
 unsigned char currdt;
-#define _SS static unsigned char _lc; switch(_lc){default:
+#define _SS static unsigned char _lc; switch(_lc) { default:
 #define _EE ;}; _lc=0; return 255;
 #define WaitX(tickets) do {_lc=__LINE__+((__LINE__%256)==0); return tickets ;} while(0); case __LINE__+((__LINE__%256)==0):
 #define RunTask(TaskName,TaskID) do { if (timers[TaskID]==0) timers[TaskID]=TaskName(); } while(0);
 
 #define CallSub(SubTaskName) do { _lc=__LINE__+((__LINE__%256)==0); return 0; case __LINE__+((__LINE__%256)==0): currdt=SubTaskName(); if(currdt!=255) return currdt;} while(0);
-#define UpdateTimers() unsigned char i; for(i=MAXTASKS;i>0 ;i--) {if((timers[i-1]!=0)&&(timers[i-1]!=255)) timers[i-1]--;}
 
 #define SEM unsigned int
 //初始化信号量
@@ -30,29 +28,24 @@ unsigned char currdt;
 //发送信号量
 #define SendSem(sem) do {sem=0;} while(0);
 
-/*****小小调度器结束*******************************************************/
-
-#define LED1 P2_1
-#define LED2 P2_1
-
-void InitT0()
+int UpdateTimers(void)
 {
-  TMOD = 0x21;
-  IE |= 0x82;  // 12t
-  TL0=0Xff;
-  TH0=0XDB;//22M---b7;
-  TR0 = 1;
+  unsigned char i;
+  for(i = MAXTASKS; i > 0; i--){
+    if((timers[i - 1] != 0) && (timers[i - 1] != 255))
+      timers[i - 1]--;
+  }
+  return 0;
 }
 
 void INTT0(void) __interrupt (1) __using (1)
 {
   UpdateTimers();
-  TL0=0Xff;//10ms 重装
-  TH0=0XDB;//b7;   
+  TL0 = 0Xff;//10ms 重装
+  TH0 = 0XDB;//b7;   
 }
 
-
-int task1() {
+int task1(void) {
 _SS
   while(1) {
     WaitX(50);
@@ -61,7 +54,7 @@ _SS
 _EE
 }
 
-int task2() {
+int task2(void) {
 _SS
   while(1) {
     WaitX(100);
@@ -70,9 +63,10 @@ _SS
 _EE
 }
 
-void main()
+void main(void)
 {
-  InitT0();
+  tiny51_os_timer_init();
+  //set_timer_irq_callback_function(&UpdateTimers);
   while(1) {
     RunTask(task1, 0);
     RunTask(task2, 1);

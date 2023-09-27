@@ -7,4 +7,6 @@
 
 #include <8052.h>
 
+#define NULL (void *)0
+
 #endif //__STC89C52_H
