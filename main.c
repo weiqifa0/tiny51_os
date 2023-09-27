@@ -7,88 +7,76 @@
 #include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
 
-#define led1 TINY51_OS_GPIO1_1
 
-void delayms(unsigned int ms)
+/****小小调度器开始**********************************************/
+#define MAXTASKS 2
+static unsigned char timers[MAXTASKS];
+unsigned char currdt;
+#define _SS static unsigned char _lc; switch(_lc){default:
+#define _EE ;}; _lc=0; return 255;
+#define WaitX(tickets) do {_lc=__LINE__+((__LINE__%256)==0); return tickets ;} while(0); case __LINE__+((__LINE__%256)==0):
+#define RunTask(TaskName,TaskID) do { if (timers[TaskID]==0) timers[TaskID]=TaskName(); } while(0);
+
+#define CallSub(SubTaskName) do { _lc=__LINE__+((__LINE__%256)==0); return 0; case __LINE__+((__LINE__%256)==0): currdt=SubTaskName(); if(currdt!=255) return currdt;} while(0);
+#define UpdateTimers() unsigned char i; for(i=MAXTASKS;i>0 ;i--) {if((timers[i-1]!=0)&&(timers[i-1]!=255)) timers[i-1]--;}
+
+#define SEM unsigned int
+//初始化信号量
+#define InitSem(sem) sem=0;
+//等待信号量
+#define WaitSem(sem) do{ sem=1; WaitX(0); if (sem>0) return 1;} while(0);
+//等待信号量或定时器溢出， 定时器tickets 最大为0xFFFE
+#define WaitSemX(sem,tickets) do { sem=tickets+1; WaitX(0); if(sem>1){ sem--; return 1;} } while(0);
+//发送信号量
+#define SendSem(sem) do {sem=0;} while(0);
+
+/*****小小调度器结束*******************************************************/
+
+#define LED1 P2_1
+#define LED2 P2_1
+
+void InitT0()
 {
-	unsigned int x, y;
-
-	for (y = ms; y > 0; y--) {
-		for (x = 227; x > 0; x--);
-	}
+  TMOD = 0x21;
+  IE |= 0x82;  // 12t
+  TL0=0Xff;
+  TH0=0XDB;//22M---b7;
+  TR0 = 1;
 }
 
-void main(void)
+void INTT0(void) __interrupt (1) __using (1)
 {
-	task_scheduling_init();
-	while (1) {
-		led1 = 0;
-		delayms(1000);
-		led1 = 1;
-		delayms(1000);
-	}
+  UpdateTimers();
+  TL0=0Xff;//10ms 重装
+  TH0=0XDB;//b7;   
 }
-// #include "core.h"
-// #include "task_switch.h"
-// #include "reg51.h"
-// #include "uart.h"
 
-// sbit led1 = P1^4;
-// sbit led2 = P1^5;
 
-// void system_init(void)
-// {
-// 	P1M1 = 0;	P1M0 = 0;
-// 	UART1_config(1);
-// }
+int task1() {
+_SS
+  while(1) {
+    WaitX(50);
+    LED1 = !LED1;
+  }
+_EE
+}
 
-// void test(void)
-// {
-// 	char i = 0;
+int task2() {
+_SS
+  while(1) {
+    WaitX(100);
+    LED2=!LED2;
+  }
+_EE
+}
 
-// 	os_delay(10);
-// 	i++;
-// 	i++;
-// }
-
-// void task_0(void)
-// {
-// 	while(1)
-// 	{
-// 		led1 = 0;
-// 		test();
-// 		os_delay(3000);
-// 		led1 = 1;
-// 		os_delay(3000);
-// 	}
-// }
-
-// void task_1(void)
-// {
-// 	os_delay(1000);
-// 	PrintString1("*****************************\r\n");
-// 	PrintString1("        hello sample os      \r\n");
-// 	PrintString1("        v0.1                 \r\n");
-// 	PrintString1("        2020.10.13           \r\n");
-// 	PrintString1("*****************************\r\n");
-// 	while(1)
-// 	{
-// 		led2 = 0;
-// 		os_delay(100);
-// 		led2 = 1;
-// 		os_delay(100);
-// 	}
-// }
-
-// int main(void)
-// {
-// 	system_init();
-// 	os_init();
-// 	os_task_create(1,task_1,(unsigned char)os_tsak_stack[1]);
-// 	os_task_create(0,task_0,(unsigned char)os_tsak_stack[0]);
-// 	os_start();
-
-// 	return 0;
-// }
+void main()
+{
+  InitT0();
+  while(1) {
+    RunTask(task1, 0);
+    RunTask(task2, 1);
+  }
+}
 
 
