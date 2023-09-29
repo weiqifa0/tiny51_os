@@ -10,8 +10,8 @@
 #define MAX_TASK_COUNT 5
 #define MAX_TASK_DEEP_SIZE 12
 
-extern uint8_t __idata task_stack[MAX_TASK_COUNT][MAX_TASK_DEEP_SIZE];
-extern uint8_t __idata task_sp[MAX_TASK_COUNT];
+extern uint8_t RAM_RANGE_IDATA task_stack[MAX_TASK_COUNT][MAX_TASK_DEEP_SIZE];
+extern uint8_t RAM_RANGE_IDATA task_sp[MAX_TASK_COUNT];
 extern uint8_t current_task_pid;
 
 // 从指定的任务开始运行任务调度.调用该宏后,将永不返回.
