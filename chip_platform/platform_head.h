@@ -16,4 +16,10 @@ void tiny51_os_timer_init(void);
 typedef int (*tiny51_os_callback)(void);
 int set_timer_irq_callback_function(tiny51_os_callback m_timer_irq_function);
 int UpdateTimers(void);
+
+typedef unsigned char uint8_t;
+typedef unsigned int uint16_t;
+
+#define RAM_RANGE_IDATA __idata
+
 #endif //__PLATFORM_HEAD_H

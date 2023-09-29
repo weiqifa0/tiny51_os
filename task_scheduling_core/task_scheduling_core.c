@@ -5,23 +5,23 @@
 
 #include "task_scheduling_core.h"
 
-unsigned char __idata task_stack[MAX_TASKS][MAX_TASK_DEP];
-unsigned char __idata task_sp[MAX_TASKS];
-unsigned char task_id;
+uint8_t RAM_RANGE_IDATA task_stack[MAX_TASK_COUNT][MAX_TASK_DEEP_SIZE];
+uint8_t RAM_RANGE_IDATA task_sp[MAX_TASK_COUNT];
+uint8_t current_task_pid;
+uint8_t RAM_RANGE_IDATA task_count = 0;
 
-// 任务切换函数(任务调度器)
 void tiny51_task_scheduling(void)
 {
-  task_sp[task_id] = SP;
-  if(++task_id == MAX_TASKS)
-    task_id = 0;
-  SP = task_sp[task_id];
+  task_sp[current_task_pid] = SP;
+  if(++current_task_pid >= task_count)
+    current_task_pid = 0;
+  SP = task_sp[current_task_pid];
 }
 
-// 任务装入函数.将指定的函数(参数1)装入指定(参数2)的任务槽中.如果该槽中原来就有任务,则原任务丢失,但系统本身不会发生错误.
-void task_load(unsigned int fn, unsigned char tid)
+void register_task_scheduling(uint16_t task_address, uint8_t tid)
 {
-  task_sp[tid] = (unsigned char __idata)(task_stack[tid] + 1);
-  task_stack[tid][0] = (unsigned int)fn & 0xff;
-  task_stack[tid][1] = (unsigned int)fn >> 8;
+  task_sp[task_count] = (uint8_t RAM_RANGE_IDATA)(task_stack[task_count] + 1);
+  task_stack[task_count][0] = (unsigned int)task_address & 0xff;
+  task_stack[task_count][1] = (unsigned int)task_address >> 8;
+  task_count++;
 }

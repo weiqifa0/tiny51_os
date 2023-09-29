@@ -39,12 +39,40 @@ void task2()
   }
 }
 
+void task3()
+{
+  static int j = 0;
+  while(1)
+  {
+    if (j++ >= 400)
+    {
+      j = 0;
+      TINY51_OS_GPIO1_3 = !TINY51_OS_GPIO1_3;
+    }
+    tiny51_task_scheduling();//编译后在这里打上断点
+  }
+}
+
+void task4()
+{
+  static int j = 0;
+  while(1)
+  {
+    if (j++ >= 6000)
+    {
+      j = 0;
+      TINY51_OS_GPIO1_4 = !TINY51_OS_GPIO1_4;
+    }
+    tiny51_task_scheduling();//编译后在这里打上断点
+  }
+}
+
 void main()
 {
-  //这里装载了两个任务,因此在定义MAX_TASKS时也必须定义为2
-  task_load((unsigned int)task1, (unsigned char)0);//将task1函数装入0号槽
-  task_load((unsigned int)task2, (unsigned char)1);//将task2函数装入1号槽
-  // timer0_init();
-  os_start(0);
+  register_task_scheduling((unsigned int)task1, (unsigned char)0);
+  register_task_scheduling((unsigned int)task2, (unsigned char)1);
+  register_task_scheduling((unsigned int)task3, (unsigned char)2);
+  register_task_scheduling((unsigned int)task4, (unsigned char)3);
+  start_task_scheduling(0);
 }
 
