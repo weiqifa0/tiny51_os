@@ -7,10 +7,15 @@
 
 #include "stc89c52.h"
 
+#define CPU_MCLK 110592 //HZ
+
 #define TINY51_OS_GPIO1_1 P1_0
 #define TINY51_OS_GPIO1_2 P1_1
 #define TINY51_OS_GPIO1_3 P1_2
 #define TINY51_OS_GPIO1_4 P1_3
+#define TINY51_OS_GPIO1_5 P1_5
+#define TINY51_OS_GPIO1_6 P1_6
+#define TINY51_OS_GPIO1_7 P1_7
 
 void tiny51_os_timer_init(void);
 typedef int (*tiny51_os_callback)(void);
