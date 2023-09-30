@@ -9,7 +9,7 @@
 
 // ============================以下为测试代码============================
 
-void task1()
+void task1(void)
 {
   static int i = 0;
   while(1)
@@ -25,7 +25,7 @@ void task1()
   }
 }
 
-void task2()
+void task2(void)
 {
   static int j = 0;
   while(1)
@@ -39,7 +39,7 @@ void task2()
   }
 }
 
-void task3()
+void task3(void)
 {
   static int j = 0;
   while(1)
@@ -53,7 +53,7 @@ void task3()
   }
 }
 
-void task4()
+void task4(void)
 {
   static int j = 0;
   while(1)
@@ -67,12 +67,13 @@ void task4()
   }
 }
 
-void main()
+void main(void)
 {
-  register_task_scheduling((unsigned int)task1, (unsigned char)0);
-  register_task_scheduling((unsigned int)task2, (unsigned char)1);
-  register_task_scheduling((unsigned int)task3, (unsigned char)2);
-  register_task_scheduling((unsigned int)task4, (unsigned char)3);
-  start_task_scheduling(0);
+  tiny51_init_task_scheduling();
+  tiny51_register_task_scheduling((unsigned int)task1, (unsigned char)0);
+  tiny51_register_task_scheduling((unsigned int)task2, (unsigned char)1);
+  tiny51_register_task_scheduling((unsigned int)task3, (unsigned char)2);
+  tiny51_register_task_scheduling((unsigned int)task4, (unsigned char)3);
+  tiny51_start_task_scheduling(0);
 }
 
