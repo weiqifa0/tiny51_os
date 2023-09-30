@@ -22,7 +22,7 @@ typedef struct task_obj_st
   uint8_t task_obj_address;
 #endif
   uint16_t task_sleep_ms;
-  uint16_t heartbeat_count;
+  volatile uint16_t heartbeat_count_per_1ms;
 } task_obj;
 typedef struct scheduling_core_st
 {
@@ -34,10 +34,12 @@ typedef struct scheduling_core_st
   uint8_t current_runing_pid;
 } scheduling_core;
 
+extern scheduling_core RAM_RANGE_IDATA scheduling_core_t;
+
 void tiny51_task_scheduling(void);
-void tiny51_register_task_scheduling(uint16_t ftask_addressn, uint16_t sleep_ms);
+void tiny51_register_task_scheduling(uint16_t ftask_addressn, uint16_t task_sleep_ms);
 void tiny51_start_task_scheduling(uint8_t pid);
-inline void tiny51_run_task_in_stack(uint8_t ready_to_run_address);
+inline void tiny51_run_task_in_stack(uint16_t ready_to_run_address);
 inline void tiny51_init_task_scheduling(void);
 
 #endif //__MACHINE_CONFIG_H
