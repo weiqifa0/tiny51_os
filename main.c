@@ -6,6 +6,7 @@
 #include "chip_platform/platform_head.h"
 #include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
+#include "drivers/lcd1602.h"
 
 void task1(void)
 {
@@ -60,11 +61,15 @@ void task7(void)
 
 void task8(void)
 {
-  TINY51_OS_GPIO1_8 = !TINY51_OS_GPIO1_8;
+  TINY51_OS_GPIO1_0 = !TINY51_OS_GPIO1_0;
 }
 
 void main(void)
 {
+  lcd1602_init();
+  lcd1602_position_x_y(0);
+  lcd1602_write_string(5, 0, "Happy");
+  lcd1602_write_string(5, 1, "10.1");
   platform_timer_init_1ms();
   tiny51_init_task_scheduling();
   tiny51_register_task_scheduling((unsigned int)task1, 3000);
@@ -75,8 +80,7 @@ void main(void)
   tiny51_register_task_scheduling((unsigned int)task6, 200);
   tiny51_register_task_scheduling((unsigned int)task7, 1000);
   tiny51_register_task_scheduling((unsigned int)task8, 700);
-  for (;;)
-  {
+  for (;;) {
     tiny51_task_scheduling();
   }
 }

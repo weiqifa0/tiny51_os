@@ -15,3 +15,16 @@ void platform_timer_init_1ms(void)
   EA = 1;
 }
 
+void platform_delay_xms(uint16_t x)		//@11.0592MHz
+{
+  uint16_t i, j;
+  while (x--)
+  {
+    PLATFORM_NOP(1);
+    i = 2;
+    j = 199;
+    do {
+      while (--j);
+    } while (--i);
+  }
+}
