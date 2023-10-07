@@ -6,6 +6,7 @@
 #include "chip_platform/platform_head.h"
 #include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
+#include "drivers/lcd1602.h"
 
 void task0(void)
 {
@@ -36,8 +37,13 @@ void task2(void)
 
 void main(void)
 {
+  lcd1602_init();
+  lcd1602_position_x_y(0);
+  lcd1602_write_string(5, 0, "Happy");
+  lcd1602_write_string(5, 1, "10.1");
   platform_timer_init_1ms();
   tiny51_init_task_scheduling();
+
   tiny51_register_task_scheduling(0, task0);
   tiny51_register_task_scheduling(1, task1);
   tiny51_register_task_scheduling(2, task2);
@@ -59,5 +65,5 @@ void platform_timer_init_10ms_interrupt(void) __interrupt(1)
 
   __asm;
   nop
-      __endasm;
+  __endasm;
 }

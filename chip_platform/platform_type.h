@@ -7,6 +7,7 @@
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
+typedef __bit bool;
 
 #define PLATFORM_UNUSED(X) (X = X)
 
