@@ -7,87 +7,57 @@
 #include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
 
+void task0(void)
+{
+  while (1)
+  {
+    TINY51_OS_GPIO1_0 = !TINY51_OS_GPIO1_0;
+    platform_delay_xms(1);
+  }
+}
+
 void task1(void)
 {
-  // while(1)
+  while (1)
   {
     TINY51_OS_GPIO1_1 = !TINY51_OS_GPIO1_1;
-    // tiny51_task_scheduling();
+    platform_delay_xms(2);
   }
 }
 
 void task2(void)
 {
-  // while(1)
+  while (1)
   {
     TINY51_OS_GPIO1_2 = !TINY51_OS_GPIO1_2;
-    // tiny51_task_scheduling();
+    platform_delay_xms(3);
   }
-}
-
-void task3(void)
-{
-  // while(1)
-  {
-    TINY51_OS_GPIO1_3 = !TINY51_OS_GPIO1_3;
-    // tiny51_task_scheduling();
-  }
-}
-
-void task4(void)
-{
-  // while(1)
-  {
-    TINY51_OS_GPIO1_4 = !TINY51_OS_GPIO1_4;
-    // tiny51_task_scheduling();
-  }
-}
-
-void task5(void)
-{
-  TINY51_OS_GPIO1_5 = !TINY51_OS_GPIO1_5;
-}
-
-void task6(void)
-{
-  TINY51_OS_GPIO1_6 = !TINY51_OS_GPIO1_6;
-}
-
-void task7(void)
-{
-  TINY51_OS_GPIO1_7 = !TINY51_OS_GPIO1_7;
-}
-
-void task8(void)
-{
-  TINY51_OS_GPIO1_8 = !TINY51_OS_GPIO1_8;
 }
 
 void main(void)
 {
   platform_timer_init_1ms();
   tiny51_init_task_scheduling();
-  tiny51_register_task_scheduling((unsigned int)task1, 3000);
-  tiny51_register_task_scheduling((unsigned int)task2, 200);
-  tiny51_register_task_scheduling((unsigned int)task3, 1000);
-  tiny51_register_task_scheduling((unsigned int)task4, 700);
-  tiny51_register_task_scheduling((unsigned int)task5, 3000);
-  tiny51_register_task_scheduling((unsigned int)task6, 200);
-  tiny51_register_task_scheduling((unsigned int)task7, 1000);
-  tiny51_register_task_scheduling((unsigned int)task8, 700);
-  for (;;)
-  {
-    tiny51_task_scheduling();
-  }
+  tiny51_register_task_scheduling(0, task0);
+  tiny51_register_task_scheduling(1, task1);
+  tiny51_register_task_scheduling(2, task2);
+  tiny51_task_start(0);
 }
 
-void platform_timer_init_10us_interrupt(void)	__interrupt (1)
+void platform_timer_init_10ms_interrupt(void) __interrupt(1)
 {
-  int i;
-  for (i = 0; i < scheduling_core_t.register_task_count; i++) {
-    scheduling_core_t.task_sp[i].heartbeat_count_per_1ms++;
-  }
+  EA = 0;
+  TH0 = 0xD8;
+  TL0 = 0xF0;
+  tiny51_task[tiny51_get_current_task()].stack_top = SP;
+  tiny51_task[tiny51_get_current_task()].status = READY_STATUS;
+  tiny51_task[tiny51_get_next_task()].status = RUN_STATUS;
+  SP = tiny51_task[tiny51_get_current_task()].stack_top;
+  TINY51_OS_GPIO1_7 = !TINY51_OS_GPIO1_7;
 
-  TH0 = 0XFC;
-  TL0 = 0X18;
+  EA = 1;
+
+  __asm;
+  nop
+      __endasm;
 }
