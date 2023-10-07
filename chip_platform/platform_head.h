@@ -30,7 +30,7 @@
 
 #define TINY51_OS_GPIO_PORT_2 P2
 
-void platform_timer_init_1ms(void);
+void platform_timer_init_10ms(void);
 void platform_delay_xms(uint16_t x);
 
 #define RAM_RANGE_IDATA __idata
