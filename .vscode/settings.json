@@ -1,4 +1,14 @@
 {
+  "editor.mouseWheelZoom": true,
+  "C_Cpp.updateChannel": "Insiders",
+  "editor.detectIndentation": true,  //关闭检测第一个tab后面就tab
+  "editor.renderControlCharacters": true, //制表符显示->
+  "editor.renderWhitespace": "all", //空格显示...
+  "editor.detectIndentation": false,  //关闭检测第一个tab后面就tab
+  "editor.renderControlCharacters": true, //制表符显示->
+  "editor.renderWhitespace": "all", //空格显示...
+  "editor.tabSize": 2,//tab为四个空格
+  "editor.insertSpaces": true, //转为空格
   "files.associations": {
     "task_scheduling_core.h": "c"
   },

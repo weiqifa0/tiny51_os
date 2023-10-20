@@ -46,4 +46,6 @@ typedef __bit bool;
 
 #define PLATFORM_NOP(N)   PLATFORM_NOP_##N()
 
+#define PLATFORM_OPEN_IRQ(x) EA = x
+
 #endif //__PLATFORM_TYPE_H

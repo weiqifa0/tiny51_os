@@ -64,7 +64,7 @@ void lcd1602_write_data(uint8_t data)
 
 void lcd1602_write_string(uint8_t x,uint8_t y,uint8_t *str)
 {
-  uint8_t addr;
+  uint8_t addr = 0;
   if(y == 0)
   {
     addr = 0x80 + x;

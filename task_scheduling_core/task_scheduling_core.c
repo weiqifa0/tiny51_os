@@ -11,167 +11,160 @@ task_obj RAM_RANGE_IDATA tiny51_task[TASK_MAX_NUM];
 
 uint8_t tiny51_get_next_task(void)
 {
-	static uint8_t task_tmp = 0;
-	task_tmp = scheduling_core_t.cur_task;
-	while (1)
-	{
-		if (task_tmp < TASK_VALID_NUM) // 设定最后一个任务为空闲任务，所以有效任务就是前面的任务个数
-		{
-			task_tmp += 1;
-		}
-		else
-			task_tmp = 0;
+  static uint8_t tmp_task_id = 0;
+  tmp_task_id = scheduling_core_t.current_task_id;
+  while (1)
+  {
+    // 设定最后一个任务为空闲任务，所以有效任务就是前面的任务个数
+    if (tmp_task_id < TASK_VALID_NUM) {
+      tmp_task_id += 1;
+    } else {
+      tmp_task_id = 0;
+    }
 
-		if (task_tmp == scheduling_core_t.cur_task)
-		{
-			scheduling_core_t.cur_task = TASK_IDLE_NUM;
-			break;
-		}
-		if (tiny51_task[task_tmp].status == READY_STATUS)
-		{
-			scheduling_core_t.cur_task = task_tmp;
-			break;
-		}
-		else
-			continue;
-	}
+    if (tmp_task_id == scheduling_core_t.current_task_id) {
+      scheduling_core_t.current_task_id = TASK_IDLE_NUM;
+      break;
+    }
 
-	return scheduling_core_t.cur_task;
+    if (tiny51_task[tmp_task_id].status == TINY51_OS_STATUS_READY) {
+      scheduling_core_t.current_task_id = tmp_task_id;
+      break;
+    } else {
+      continue;
+    }
+  }
+
+  return scheduling_core_t.current_task_id;
 }
 
 uint8_t tiny51_get_current_task(void)
 {
-	return scheduling_core_t.cur_task;
+  return scheduling_core_t.current_task_id;
 }
 
-void tiny51_set_current_task(uint8_t curtask)
+void tiny51_set_current_task(uint8_t current_task)
 {
-	scheduling_core_t.cur_task = curtask;
+  scheduling_core_t.current_task_id = current_task;
 }
 
 // 将任务添加到系统中
-void tiny51_register_task_scheduling(uint8_t task_num, void (*task_fun)(void))
+void tiny51_register_task_scheduling(uint8_t task_id, void (*task_fun_address)(void))
 {
-	tiny51_task[task_num].addr_tab[0] = (uint16_t)task_fun & 0xff;
-	tiny51_task[task_num].addr_tab[1] = ((uint16_t)task_fun >> 8) & 0xff;
-	tiny51_task[task_num].stack_top = (uint8_t)(tiny51_task[task_num].addr_tab + 15);
-	tiny51_task[task_num].delayms = 0;
-	tiny51_task[task_num].status = READY_STATUS;
-	tiny51_task[task_num].num = task_num;
+  tiny51_task[task_id].addr_tab[0] = (uint16_t)task_fun_address & 0xff;
+  tiny51_task[task_id].addr_tab[1] = ((uint16_t)task_fun_address >> 8) & 0xff;
+  tiny51_task[task_id].stack_top = (uint8_t)(tiny51_task[task_id].addr_tab + 15);
+  tiny51_task[task_id].delay_ms = 0;
+  tiny51_task[task_id].status = TINY51_OS_STATUS_READY;
+  tiny51_task[task_id].task_id = task_id;
 }
 
 // 输出栈指针
-uint8_t tiny51_get_task_sp(uint8_t task_num)
+uint8_t tiny51_get_task_sp(uint8_t task_id)
 {
-	return tiny51_task[task_num].stack_top;
+  return tiny51_task[task_id].stack_top;
 }
 
 void tiny51_task_schedule(void)
 {
-	EA = 0;
+  EA = 0;
 
-	__asm__("PUSH ACC");
-	__asm__("PUSH B");
-	__asm__("PUSH DPH");
-	__asm__("PUSH DPL");
-	__asm__("PUSH PSW");
-	__asm__("PUSH ar0");
-	__asm__("PUSH ar1");
-	__asm__("PUSH ar2");
-	__asm__("PUSH ar3");
-	__asm__("PUSH ar4");
-	__asm__("PUSH ar5");
-	__asm__("PUSH ar6");
-	__asm__("PUSH ar7");
+  __asm__("PUSH ACC");
+  __asm__("PUSH B");
+  __asm__("PUSH DPH");
+  __asm__("PUSH DPL");
+  __asm__("PUSH PSW");
+  __asm__("PUSH ar0");
+  __asm__("PUSH ar1");
+  __asm__("PUSH ar2");
+  __asm__("PUSH ar3");
+  __asm__("PUSH ar4");
+  __asm__("PUSH ar5");
+  __asm__("PUSH ar6");
+  __asm__("PUSH ar7");
 
-	tiny51_task[tiny51_get_current_task()].stack_top = SP;
-	tiny51_task[tiny51_get_next_task()].status = RUN_STATUS;
-	SP = tiny51_task[tiny51_get_current_task()].stack_top;
+  tiny51_task[tiny51_get_current_task()].stack_top = SP;
+  tiny51_task[tiny51_get_next_task()].status = TINY51_OS_STATUS_RUNING;
+  SP = tiny51_task[tiny51_get_current_task()].stack_top;
 
-	__asm__("POP ar7");
-	__asm__("POP ar6");
-	__asm__("POP ar5");
-	__asm__("POP ar4");
-	__asm__("POP ar3");
-	__asm__("POP ar2");
-	__asm__("POP ar1");
-	__asm__("POP ar0");
-	__asm__("POP PSW");
-	__asm__("POP DPL");
-	__asm__("POP DPH");
-	__asm__("POP B");
+  __asm__("POP ar7");
+  __asm__("POP ar6");
+  __asm__("POP ar5");
+  __asm__("POP ar4");
+  __asm__("POP ar3");
+  __asm__("POP ar2");
+  __asm__("POP ar1");
+  __asm__("POP ar0");
+  __asm__("POP PSW");
+  __asm__("POP DPL");
+  __asm__("POP DPH");
+  __asm__("POP B");
 
-	EA = 1;
+  EA = 1;
 }
 
-void tiny51_task_start(uint8_t task_num)
+void tiny51_task_start(uint8_t task_id)
 {
-	tiny51_task[task_num].status = RUN_STATUS;
-	SP = tiny51_get_task_sp(task_num);
-	tiny51_set_current_task(task_num);
+  tiny51_task[task_id].status = TINY51_OS_STATUS_RUNING;
+  SP = tiny51_get_task_sp(task_id);
+  tiny51_set_current_task(task_id);
 
-	__asm__("POP ar7");
-	__asm__("POP ar6");
-	__asm__("POP ar5");
-	__asm__("POP ar4");
-	__asm__("POP ar3");
-	__asm__("POP ar2");
-	__asm__("POP ar1");
-	__asm__("POP ar0");
-	__asm__("POP PSW");
-	__asm__("POP DPL");
-	__asm__("POP DPH");
-	__asm__("POP B");
-	__asm__("POP ACC");
-	__asm__("RET");
-	
+  __asm__("POP ar7");
+  __asm__("POP ar6");
+  __asm__("POP ar5");
+  __asm__("POP ar4");
+  __asm__("POP ar3");
+  __asm__("POP ar2");
+  __asm__("POP ar1");
+  __asm__("POP ar0");
+  __asm__("POP PSW");
+  __asm__("POP DPL");
+  __asm__("POP DPH");
+  __asm__("POP B");
+  __asm__("POP ACC");
+  __asm__("RET");
 }
 
 void os_task_delayms_handle(void)
 {
-	static uint8_t i = 0;
-	for (i = 0; i < (TASK_VALID_NUM + 1); i++)
-	{
-		if (tiny51_task[i].status == DELAY_STATUS)
-		{
-			tiny51_task[i].delayms--;
-			if (tiny51_task[i].delayms == 0)
-				tiny51_task[i].status = READY_STATUS;
-		}
-	}
+  static uint8_t i = 0;
+  for (i = 0; i < (TASK_VALID_NUM + 1); i++) {
+    if (tiny51_task[i].status == TINY51_OS_STATUS_DELAY) {
+      tiny51_task[i].delay_ms--;
+      if (tiny51_task[i].delay_ms == 0) {
+        tiny51_task[i].status = TINY51_OS_STATUS_READY;
+      }
+    }
+  }
 }
 
-void tiny51_task_delayms(uint16_t ms)
+void tiny51_task_delay(uint16_t delay_ms)
 {
-	EA = 0; // 关中断
-	tiny51_task[scheduling_core_t.cur_task].delayms = ms;
-	tiny51_task[scheduling_core_t.cur_task].status = DELAY_STATUS;
-	tiny51_task_schedule();
-	EA = 1; // 开中断
+  EA = 0; // 关中断
+  tiny51_task[scheduling_core_t.current_task_id].delay_ms = delay_ms;
+  tiny51_task[scheduling_core_t.current_task_id].status = TINY51_OS_STATUS_DELAY;
+  tiny51_task_schedule();
+  EA = 1; // 开中断
 }
 
 
 void tiny51_task_idle(void)
 {
-	while (1)
-		;
+  while (1)
+    ;
 }
 
 void tiny51_init_task_scheduling(void)
 {
-	uint8_t i = 0;
-	for (i = 0; i < TASK_MAX_NUM; i++)
-	{
-		memset(&tiny51_task[i], 0, sizeof(task_obj));
-	}
-	tiny51_register_task_scheduling(3, tiny51_task_idle);
+  memset(&tiny51_task, 0, sizeof(tiny51_task));
+  tiny51_register_task_scheduling(3, tiny51_task_idle);
 }
 
 
 void tiny51_task_scheduling(void)
 {
-	tiny51_task[tiny51_get_current_task()].stack_top = SP;
-	tiny51_task[tiny51_get_current_task()].status = READY_STATUS;
-	tiny51_task[tiny51_get_next_task()].status = RUN_STATUS;
-	SP = tiny51_task[tiny51_get_current_task()].stack_top;
+  tiny51_task[tiny51_get_current_task()].stack_top = SP;
+  tiny51_task[tiny51_get_current_task()].status = TINY51_OS_STATUS_READY;
+  tiny51_task[tiny51_get_next_task()].status = TINY51_OS_STATUS_RUNING;
+  SP = tiny51_task[tiny51_get_current_task()].stack_top;
 }

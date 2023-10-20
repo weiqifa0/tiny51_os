@@ -51,17 +51,16 @@ void main(void)
 
 void platform_timer_init_10ms_interrupt(void) __interrupt(1)
 {
-  EA = 0;
+  PLATFORM_OPEN_IRQ(0);
+
   TH0 = 0xD8;
   TL0 = 0xF0;
+
   tiny51_task[tiny51_get_current_task()].stack_top = SP;
-  tiny51_task[tiny51_get_current_task()].status = READY_STATUS;
-  tiny51_task[tiny51_get_next_task()].status = RUN_STATUS;
+  tiny51_task[tiny51_get_current_task()].status = TINY51_OS_STATUS_READY;
+  tiny51_task[tiny51_get_next_task()].status = TINY51_OS_STATUS_RUNING;
   SP = tiny51_task[tiny51_get_current_task()].stack_top;
 
-  EA = 1;
-
-  __asm;
-  nop
-  __endasm;
+  PLATFORM_OPEN_IRQ(1);
+  PLATFORM_NOP(1);
 }
