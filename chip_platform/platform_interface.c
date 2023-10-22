@@ -17,12 +17,12 @@ void platform_timer_init_10ms(void)
 	EA = 1;
 }
 
-void platform_delay_xms(uint16_t x)		//@11.0592MHz
+void platform_delay_xms(unsigned int ms)		//@11.0592MHz
 {
-  uint16_t i, j;
-  while (x--)
-  {
-    PLATFORM_NOP(1);
+  unsigned char i, j;
+
+  while (ms--) {
+    __asm__("nop");
     i = 2;
     j = 199;
     do {

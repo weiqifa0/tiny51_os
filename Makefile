@@ -1,9 +1,9 @@
-CC	= sdcc
+CC	= sdcc --debug
 
 all:clean tiny51_os.hex
 
 flash:clean tiny51_os.hex
-	stcgal -p /dev/tty.usbserial-130 main.hex
+	stcgal -p /dev/tty.usbserial-110 main.hex
 
 tiny51_os.hex:main.ihx
 	packihx main.ihx > main.hex
@@ -22,4 +22,4 @@ lcd1602.rel:./drivers/lcd1602.c
 
 .PHONY:clean
 clean:
-	rm -rf *.bin *.hex *.asm *.ihx *.lk *.lst *.map *.mem *.rel *.rst *.sym
+	rm -rf *.bin *.hex *.asm *.ihx *.lk *.lst *.map *.mem *.rel *.rst *.sym *.adb *.omf *.cdb
