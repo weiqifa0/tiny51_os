@@ -12,7 +12,7 @@
 
 #define TASK_STACK_SIZE	15
 #define TASK_MAX_NUM	8
-#define TASK_IDLE_NUM	(TASK_MAX_NUM - 1)
+#define TASK_IDLE_NUM	(0)
 #define TASK_VALID_NUM	(TASK_MAX_NUM - 2)
 
 //任务状态定义
@@ -25,6 +25,7 @@ enum task_status {
 //系统管理信息结构体
 typedef struct scheduling_core_st {
   uint8_t current_task_id;
+  uint8_t task_num;
 } scheduling_core;
 
 typedef struct task_obj_st {

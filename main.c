@@ -13,7 +13,6 @@ void task0(void)
   while (1)
   {
     TINY51_OS_GPIO1_0 = !TINY51_OS_GPIO1_0;
-    platform_delay_xms(1000);
   }
 }
 
@@ -22,7 +21,6 @@ void task1(void)
   while (1)
   {
     TINY51_OS_GPIO1_1 = !TINY51_OS_GPIO1_1;
-    platform_delay_xms(200);
   }
 }
 
@@ -31,7 +29,6 @@ void task2(void)
   while (1)
   {
     TINY51_OS_GPIO1_2 = !TINY51_OS_GPIO1_2;
-    platform_delay_xms(300);
   }
 }
 
@@ -43,9 +40,9 @@ void main(void)
   // lcd1602_write_string(5, 1, "10.1");
   platform_timer_init_10ms();
   tiny51_init_task_scheduling();
-  tiny51_register_task_scheduling(0, task0);
-  tiny51_register_task_scheduling(1, task1);
-  tiny51_register_task_scheduling(2, task2);
+  tiny51_register_task_scheduling(1, task0);
+  tiny51_register_task_scheduling(2, task1);
+  tiny51_register_task_scheduling(3, task2);
   tiny51_task_start(0);
 }
 

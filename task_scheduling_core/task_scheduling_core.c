@@ -51,12 +51,15 @@ void tiny51_set_current_task(uint8_t current_task)
 // 将任务添加到系统中
 void tiny51_register_task_scheduling(uint8_t task_id, void (*task_fun_address)(void))
 {
-  tiny51_task[task_id].addr_tab[0] = (uint16_t)task_fun_address & 0xff;
-  tiny51_task[task_id].addr_tab[1] = ((uint16_t)task_fun_address >> 8) & 0xff;
-  tiny51_task[task_id].stack_top = (uint8_t)(tiny51_task[task_id].addr_tab + 15);
-  tiny51_task[task_id].delay_ms = 0;
-  tiny51_task[task_id].status = TINY51_OS_STATUS_READY;
-  tiny51_task[task_id].task_id = task_id;
+  if (scheduling_core_t.task_num < TASK_MAX_NUM) {
+    tiny51_task[scheduling_core_t.task_num].addr_tab[0] = (uint16_t)task_fun_address & 0xff;
+    tiny51_task[scheduling_core_t.task_num].addr_tab[1] = ((uint16_t)task_fun_address >> 8) & 0xff;
+    tiny51_task[scheduling_core_t.task_num].stack_top = (uint8_t)(tiny51_task[task_id].addr_tab + 15);
+    tiny51_task[scheduling_core_t.task_num].delay_ms = 0;
+    tiny51_task[scheduling_core_t.task_num].status = TINY51_OS_STATUS_READY;
+    tiny51_task[scheduling_core_t.task_num].task_id = task_id;
+    scheduling_core_t.task_num++;
+  }
 }
 
 // 输出栈指针
@@ -157,7 +160,8 @@ void tiny51_task_idle(void)
 void tiny51_init_task_scheduling(void)
 {
   memset(&tiny51_task, 0, sizeof(tiny51_task));
-  tiny51_register_task_scheduling(3, tiny51_task_idle);
+  memset(&scheduling_core_t, 0, sizeof(scheduling_core_t));
+  tiny51_register_task_scheduling(TASK_IDLE_NUM, tiny51_task_idle);
 }
 
 
