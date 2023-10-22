@@ -13,7 +13,8 @@
 #define TASK_STACK_SIZE	15
 #define TASK_MAX_NUM	8
 #define TASK_IDLE_NUM	(0)
-#define TASK_VALID_NUM	(TASK_MAX_NUM - 2)
+#define TASK_VALID_START_ID (TASK_IDLE_NUM + 1)
+#define TASK_VALID_END_ID	(TASK_MAX_NUM - 1)
 
 //任务状态定义
 enum task_status {

@@ -11,15 +11,13 @@ task_obj RAM_RANGE_IDATA tiny51_task[TASK_MAX_NUM];
 
 uint8_t tiny51_get_next_task(void)
 {
-  static uint8_t tmp_task_id = 0;
-  tmp_task_id = scheduling_core_t.current_task_id;
+  uint8_t tmp_task_id = scheduling_core_t.current_task_id;
   while (1)
   {
-    // 设定最后一个任务为空闲任务，所以有效任务就是前面的任务个数
-    if (tmp_task_id < TASK_VALID_NUM) {
+    if (tmp_task_id < TASK_VALID_END_ID) {
       tmp_task_id += 1;
     } else {
-      tmp_task_id = 0;
+      tmp_task_id = TASK_VALID_START_ID;
     }
 
     if (tmp_task_id == scheduling_core_t.current_task_id) {
@@ -131,7 +129,7 @@ void tiny51_task_start(uint8_t task_id)
 void os_task_delayms_handle(void)
 {
   static uint8_t i = 0;
-  for (i = 0; i < (TASK_VALID_NUM + 1); i++) {
+  for (i = 0; i < (TASK_VALID_END_ID + 1); i++) {
     if (tiny51_task[i].status == TINY51_OS_STATUS_DELAY) {
       tiny51_task[i].delay_ms--;
       if (tiny51_task[i].delay_ms == 0) {
