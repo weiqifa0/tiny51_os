@@ -10,7 +10,7 @@
 #include "../chip_platform/platform_head.h"
 
 
-#define TASK_STACK_SIZE	15
+#define TASK_STACK_SIZE	2
 #define TASK_MAX_NUM	8
 #define TASK_IDLE_NUM	(0)
 #define TASK_VALID_START_ID (TASK_IDLE_NUM + 1)
@@ -31,6 +31,19 @@ typedef struct scheduling_core_st {
 
 typedef struct task_obj_st {
   uint8_t addr_tab[TASK_STACK_SIZE];//本任务的栈空间
+  uint8_t ACC;
+  uint8_t B;
+  uint8_t PSW;
+  uint8_t DPL;
+  uint8_t DPH;
+  uint8_t ar0;
+  uint8_t ar1;
+  uint8_t ar2;
+  uint8_t ar3;
+  uint8_t ar4;
+  uint8_t ar5;
+  uint8_t ar6;
+  uint8_t ar7;
   uint8_t stack_top;//本任务的栈顶空间
   uint8_t status;//任务状态
   uint8_t task_id;//本任务的任务号

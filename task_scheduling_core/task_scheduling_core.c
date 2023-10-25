@@ -20,7 +20,26 @@ uint8_t tiny51_get_next_task(void)
       tmp_task_id = TASK_VALID_START_ID;
     }
 
+    //
     if (tmp_task_id == scheduling_core_t.current_task_id) {
+      switch (tmp_task_id)
+      {
+        case 0:
+          TINY51_OS_GPIO1_7 = !TINY51_OS_GPIO1_7;
+          break;
+        case 1:
+          TINY51_OS_GPIO1_6 = !TINY51_OS_GPIO1_6;
+          break;
+        case 2:
+          TINY51_OS_GPIO1_5 = !TINY51_OS_GPIO1_5;
+          break;
+        case 3:
+          TINY51_OS_GPIO1_3 = !TINY51_OS_GPIO1_3;
+          break;
+        default:
+          break;
+      }
+
       scheduling_core_t.current_task_id = TASK_IDLE_NUM;
       break;
     }
@@ -100,6 +119,7 @@ void tiny51_task_schedule(void)
   __asm__("POP DPL");
   __asm__("POP DPH");
   __asm__("POP B");
+  __asm__("POP ACC");
 
   EA = 1;
 }
