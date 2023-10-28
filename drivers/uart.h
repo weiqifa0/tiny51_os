@@ -7,5 +7,6 @@
 
 #include "../chip_platform/platform_head.h"
 
-void uart_init();
+void uart_init(void);
+void uart_write(char data);
 #endif
