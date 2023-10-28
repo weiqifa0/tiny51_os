@@ -130,6 +130,7 @@ void tiny51_task_start(uint8_t task_id)
   SP = tiny51_get_task_sp(task_id);
   tiny51_set_current_task(task_id);
 
+  // 从栈里面把对应的寄存器偏移放到CPU对应的寄存器中
   __asm__("POP ar7");
   __asm__("POP ar6");
   __asm__("POP ar5");
@@ -143,6 +144,7 @@ void tiny51_task_start(uint8_t task_id)
   __asm__("POP DPH");
   __asm__("POP B");
   __asm__("POP ACC");
+  //调用函数执行这个栈中保存的函数
   __asm__("RET");
 }
 

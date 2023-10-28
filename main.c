@@ -22,7 +22,7 @@ void task1(void)
   while (1)
   {
     TINY51_OS_GPIO1_1 = !TINY51_OS_GPIO1_1;
-    platform_delay_xms(800);
+    platform_delay_xms(300);
   }
 }
 
@@ -47,11 +47,6 @@ void main(void)
   tiny51_register_task_scheduling(2, task1);
   tiny51_register_task_scheduling(3, task2);
   tiny51_task_start(0);
-  while (1)
-  {
-    TINY51_OS_GPIO1_3 = !TINY51_OS_GPIO1_3;
-  }
-
 }
 
 void platform_timer_init_10ms_interrupt(void) __interrupt(1)
@@ -61,40 +56,11 @@ void platform_timer_init_10ms_interrupt(void) __interrupt(1)
   TH0 = 0xD8;
   TL0 = 0xF0;
 
-  // __asm__("PUSH ACC");
-  // __asm__("PUSH B");
-  // __asm__("PUSH PSW");
-  // __asm__("PUSH DPL");
-  // __asm__("PUSH DPH");
-  // __asm__("PUSH ar0");
-  // __asm__("PUSH ar1");
-  // __asm__("PUSH ar2");
-  // __asm__("PUSH ar3");
-  // __asm__("PUSH ar4");
-  // __asm__("PUSH ar5");
-  // __asm__("PUSH ar6");
-  // __asm__("PUSH ar7");
-
+  // 进入中断后，系统给每个任务task分配一个私有的栈，这个SP就是指向这个私有的栈，之后的切换都是在这个私有的栈中进行
   tiny51_task[tiny51_get_current_task()].stack_top = SP;
   tiny51_task[tiny51_get_current_task()].status = TINY51_OS_STATUS_READY;
   tiny51_task[tiny51_get_next_task()].status = TINY51_OS_STATUS_RUNING;
   SP = tiny51_task[tiny51_get_current_task()].stack_top;
 
-  // __asm__("POP ar7");
-  // __asm__("POP ar6");
-  // __asm__("POP ar5");
-  // __asm__("POP ar4");
-  // __asm__("POP ar3");
-  // __asm__("POP ar2");
-  // __asm__("POP ar1");
-  // __asm__("POP ar0");
-  // __asm__("POP DPH");
-  // __asm__("POP DPL");
-  // __asm__("POP PSW");
-  // __asm__("POP B");
-  // __asm__("POP ACC");
-  // __asm__("RET");
-
   PLATFORM_OPEN_IRQ(1);
-  PLATFORM_NOP(1);
 }
