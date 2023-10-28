@@ -3,7 +3,7 @@ CC	= sdcc --debug
 all:clean tiny51_os.hex
 
 flash:clean tiny51_os.hex
-	stcgal -p /dev/tty.usbserial-110 main.hex
+	stcgal -p /dev/tty.usbserial-1130 main.hex
 
 tiny51_os.hex:main.ihx
 	packihx main.ihx > main.hex

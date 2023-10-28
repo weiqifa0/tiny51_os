@@ -13,7 +13,7 @@ void task0(void)
   while (1)
   {
     TINY51_OS_GPIO1_0 = !TINY51_OS_GPIO1_0;
-    //platform_delay_xms(100);
+    platform_delay_xms(100);
   }
 }
 
@@ -22,7 +22,7 @@ void task1(void)
   while (1)
   {
     TINY51_OS_GPIO1_1 = !TINY51_OS_GPIO1_1;
-    //platform_delay_xms(200);
+    platform_delay_xms(800);
   }
 }
 
@@ -31,7 +31,7 @@ void task2(void)
   while (1)
   {
     TINY51_OS_GPIO1_2 = !TINY51_OS_GPIO1_2;
-    //platform_delay_xms(300);
+    platform_delay_xms(1000);
   }
 }
 
