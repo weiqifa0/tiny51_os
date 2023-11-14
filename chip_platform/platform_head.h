@@ -6,7 +6,8 @@
 #define __PLATFORM_HEAD_H
 
 #include "platform_type.h"
-#include "stc89c52.h"
+//#include "stc89c52.h"
+#include "stc8h8k64u.h"
 
 #define CPU_MCLK 110592 //HZ
 

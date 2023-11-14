@@ -5,8 +5,6 @@
 #ifndef __STC89C52_H
 #define __STC89C52_H
 
-#include <8052.h>
-
-#define NULL (void *)0
+#include <stc12.h>
 
 #endif //__STC89C52_H
