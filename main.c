@@ -41,21 +41,49 @@ void task2(void)
 
 void main(void)
 {
-  //lcd1602_init();
+  platform_set_gpio_inout(0, 5);
+  platform_set_gpio_inout(0, 6);
+  platform_set_gpio_inout(0, 7);
+  platform_set_gpio_inout(6, 0);
+  platform_set_gpio_inout(6, 1);
+  platform_set_gpio_inout(6, 2);
+  platform_set_gpio_inout(1, 0);
+  platform_set_gpio_inout(6, 3);
+  // lcd1602_init();
   // lcd1602_position_x_y(0);
   // lcd1602_write_string(5, 0, "Happy");
   // lcd1602_write_string(5, 1, "10.1");
-  platform_timer_init_10ms();
-  uart_init();
-  tiny51_init_task_scheduling();
-  tiny51_register_task_scheduling(1, task0);
-  tiny51_register_task_scheduling(2, task1);
-  tiny51_register_task_scheduling(3, task2);
-  tiny51_task_start(0);
+  // platform_timer_init_10ms();
+  // uart_init();
+  // tiny51_init_task_scheduling();
+  // tiny51_register_task_scheduling(1, task0);
+  // tiny51_register_task_scheduling(2, task1);
+  // tiny51_register_task_scheduling(3, task2);
+  // tiny51_task_start(0);
   while (1)
   {
     /* code */
-    uart_write('t');
+    // P0M0 = 0x00;
+    // P0M1 = 0x00;
+    //uart_write('t');
+    platform_set_gpio_value(0, 5, GPIO_LOW);
+    platform_set_gpio_value(0, 6, GPIO_LOW);
+    platform_set_gpio_value(0, 7, GPIO_LOW);
+    platform_set_gpio_value(6, 0, GPIO_LOW);
+    platform_set_gpio_value(6, 1, GPIO_LOW);
+    platform_set_gpio_value(6, 2, GPIO_LOW);
+    platform_set_gpio_value(1, 0, GPIO_LOW);
+    platform_set_gpio_value(6, 3, GPIO_LOW);
+    platform_delay_xms(1000);
+    platform_set_gpio_value(0, 5, GPIO_HIGH);
+    platform_set_gpio_value(0, 6, GPIO_HIGH);
+    platform_set_gpio_value(0, 7, GPIO_HIGH);
+    platform_set_gpio_value(6, 0, GPIO_HIGH);
+    platform_set_gpio_value(6, 1, GPIO_HIGH);
+    platform_set_gpio_value(6, 2, GPIO_HIGH);
+    platform_set_gpio_value(1, 0, GPIO_HIGH);
+    platform_set_gpio_value(6, 3, GPIO_HIGH);
+    platform_delay_xms(1000);
   }
 
 }

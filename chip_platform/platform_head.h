@@ -31,9 +31,54 @@
 
 #define TINY51_OS_GPIO_PORT_2 P2
 
+#define GPIO_HIGH (1)
+#define GPIO_LOW  (0)
+
 void platform_timer_init_10ms(void);
-void platform_delay_xms(unsigned int ms);
+void platform_delay_xms(uint16_t ms);
+void platform_set_gpio_inout(uint8_t gpio_x_num, uint8_t gpio_y_num);
+void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value);
 
 #define RAM_RANGE_IDATA __idata
 
+#define SET_REGISTER_M0_VALUE(x, y, value) \
+    do { \
+        switch (x) { \
+            case 0: P0M0 = (P0M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 1: P1M0 = (P1M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 2: P2M0 = (P2M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 3: P3M0 = (P3M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 4: P4M0 = (P4M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 5: P5M0 = (P5M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 6: P6M0 = (P6M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 7: P7M0 = (P7M0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+        } \
+    } while (0)
+
+#define SET_REGISTER_M1_VALUE(x, y, value) \
+    do { \
+        switch (x) { \
+            case 0: P0M1 = (P0M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 1: P1M1 = (P1M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 2: P2M1 = (P2M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 3: P3M1 = (P3M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 4: P4M1 = (P4M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 5: P5M1 = (P5M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 6: P6M1 = (P6M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 7: P7M1 = (P7M1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+        } \
+    } while (0)
+#define SET_GPIO_OUTPUT_VALUE(x, y, value) \
+    do { \
+        switch (x) { \
+            case 0: P0 = (P0 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 1: P1 = (P1 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 2: P2 = (P2 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 3: P3 = (P3 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 4: P4 = (P4 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 5: P5 = (P5 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 6: P6 = (P6 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 7: P7 = (P7 & ~(1 << y)) | ((value << y) & 0xFF); break; \
+        } \
+    } while (0)
 #endif //__PLATFORM_HEAD_H

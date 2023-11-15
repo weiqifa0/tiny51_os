@@ -7,20 +7,19 @@
 
 void platform_timer_init_10ms(void)
 {
-	TMOD = 0x01;
-	/*晶振是 11.0592MHz，定时时间为：10ms TH0 = 0xDC  TL0 = 0x00  1ms TH0 = 0xFC  TL0 = 0x66 */
-	/*晶振是 12MHz     ，定时时间为：10ms TH0 = 0xD8  TL0 = 0xF0  1ms TH0 = 0xFC  TL0 = 0x18 */
-	TH0 = 0xD8;
-	TL0 = 0xF0;
-	TR0 = 1;
-	ET0 = 1;
-	EA = 1;
+  TMOD = 0x01;
+  /*晶振是 11.0592MHz，定时时间为：10ms TH0 = 0xDC  TL0 = 0x00  1ms TH0 = 0xFC  TL0 = 0x66 */
+  /*晶振是 12MHz     ，定时时间为：10ms TH0 = 0xD8  TL0 = 0xF0  1ms TH0 = 0xFC  TL0 = 0x18 */
+  TH0 = 0xD8;
+  TL0 = 0xF0;
+  TR0 = 1;
+  ET0 = 1;
+  EA = 1;
 }
 
-void platform_delay_xms(unsigned int ms)		//@11.0592MHz
+void platform_delay_xms(uint16_t ms)		//@11.0592MHz
 {
   unsigned char i, j;
-
   while (ms--) {
     __asm__("nop");
     i = 2;
@@ -29,4 +28,15 @@ void platform_delay_xms(unsigned int ms)		//@11.0592MHz
       while (--j);
     } while (--i);
   }
+}
+
+void platform_set_gpio_inout(uint8_t gpio_x_num, uint8_t gpio_y_num)
+{
+  SET_REGISTER_M0_VALUE(gpio_x_num, gpio_y_num, 0);
+  SET_REGISTER_M1_VALUE(gpio_x_num, gpio_y_num, 0);
+}
+
+void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value)
+{
+  SET_GPIO_OUTPUT_VALUE(gpio_x_num, gpio_y_num, gpio_value);
 }
