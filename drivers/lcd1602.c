@@ -53,7 +53,7 @@ void lcd1602_write_data(uint8_t data)
 void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t data)
 {
   lcd1602_write_cmd(0x80);
-  if (y == 0) {
+  if (y == LCD1602_FIRST_ROW) {
     lcd1602_write_cmd(0x80 + x);
   } else {
     lcd1602_write_cmd(0x80 + 0x40 + x);
@@ -63,15 +63,15 @@ void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t data)
 
 void lcd1602_write_string(uint8_t x, uint8_t y, uint8_t* str)
 {
-  lcd1602_write_cmd(0x80);
-  if(y == LCD1602_FIRST_ROW) {
-    lcd1602_write_cmd(0x80 + x);
-  } else {
-    lcd1602_write_cmd(0xC0 + x);
-  }
+  // lcd1602_write_cmd(0x80);
+  // if(y == LCD1602_FIRST_ROW) {
+  //   lcd1602_write_cmd(0x80 + x);
+  // } else {
+  //   lcd1602_write_cmd(0xC0 + x);
+  // }
 
   while (*str != '\0') {
-    lcd1602_write_data(*str);
+    lcd1602_write_char(x++, y, *str);
     str++;
   }
 }

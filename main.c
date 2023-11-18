@@ -81,14 +81,15 @@ void main(void)
 {
   tiny51_gpio_init();
   lcd1602_init();
-  lcd1602_write_char(5, 0, '1');
-  lcd1602_write_char(6, 0, '9');
-  lcd1602_write_char(7, 0, '6');
-  lcd1602_write_char(8, 0, '4');
-  lcd1602_write_char(5, 1, 'l');
-  lcd1602_write_char(6, 1, 'a');
-  lcd1602_write_char(7, 1, 'b');
-  //lcd1602_write_string(10, 0, "12:51");
+  // lcd1602_write_char(5, 0, '1');
+  // lcd1602_write_char(6, 0, '9');
+  // lcd1602_write_char(7, 0, '6');
+  // lcd1602_write_char(8, 0, '4');
+  // lcd1602_write_char(5, 1, 'l');
+  // lcd1602_write_char(6, 1, 'a');
+  // lcd1602_write_char(7, 1, 'b');
+  lcd1602_write_string(0, 0, "12:51");
+  lcd1602_write_string(0, 1, "1964Lab");
 
   platform_timer_init_10ms();
   uart_init();
