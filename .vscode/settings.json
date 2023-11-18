@@ -8,7 +8,9 @@
   "editor.insertSpaces": true,
   "files.associations": {
     "task_scheduling_core.h": "c",
-    "stc8h8k64u.h": "c"
+    "stc8h8k64u.h": "c",
+    "user_config.h": "c",
+    "stc89c52.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled",
   "C_Cpp_Runner.cCompilerPath": "clang",

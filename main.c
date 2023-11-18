@@ -46,22 +46,52 @@ void task2(void)
   }
 }
 
+void tiny51_gpio_init(void)
+{
+  // gpio init
+  platform_set_gpio_mode(0, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(0, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(0, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(6, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(6, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(6, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(1, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(6, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+
+  // lcd BL
+  platform_set_gpio_mode(7, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_pull_up_capacity(7, 4, 1);
+  platform_set_gpio_value(7, 4, GPIO_HIGH);
+
+  // 1602 gpio init
+  platform_set_gpio_mode(4, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(4, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(4, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+}
+
 void main(void)
 {
-  platform_set_gpio_inout(0, 5);
-  platform_set_gpio_inout(0, 6);
-  platform_set_gpio_inout(0, 7);
-  platform_set_gpio_inout(6, 0);
-  platform_set_gpio_inout(6, 1);
-  platform_set_gpio_inout(6, 2);
-  platform_set_gpio_inout(1, 0);
-  platform_set_gpio_inout(6, 3);
-  // lcd1602_init();
-  // lcd1602_position_x_y(0);
-  // lcd1602_write_string(5, 0, "Happy");
-  // lcd1602_write_string(5, 1, "10.1");
+  tiny51_gpio_init();
+  lcd1602_init();
+  lcd1602_write_char(5, 0, '1');
+  lcd1602_write_char(6, 0, '9');
+  lcd1602_write_char(7, 0, '6');
+  lcd1602_write_char(8, 0, '4');
+  lcd1602_write_char(5, 1, 'l');
+  lcd1602_write_char(6, 1, 'a');
+  lcd1602_write_char(7, 1, 'b');
+  //lcd1602_write_string(10, 0, "12:51");
+
   platform_timer_init_10ms();
-  // uart_init();
+  uart_init();
   tiny51_init_task_scheduling();
   tiny51_register_task_scheduling(1, task0);
   tiny51_register_task_scheduling(2, task1);

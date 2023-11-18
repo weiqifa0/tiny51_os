@@ -19,13 +19,7 @@ bool lcd1602_busy_state(void)
 
 void lcd1602_write_cmd(uint8_t cmd)
 {
-  uint8_t count = 0;
-  while (lcd1602_busy_state()) {
-    platform_delay_xms(10);
-    if (count++ >= 5) {
-      break;
-    }
-  }
+  while (lcd1602_busy_state());
   SET_LCD1602_RES_LOW();
   SET_LCD1602_RW_LOW();
   SET_LCD1602_EN_LOW();
@@ -44,13 +38,7 @@ void lcd1602_position_x_y(uint8_t positon)
 
 void lcd1602_write_data(uint8_t data)
 {
-  uint8_t count = 0;
-  while (lcd1602_busy_state()) {
-    platform_delay_xms(10);
-    if (count++ >= 5) {
-      break;
-    }
-  }
+  while (lcd1602_busy_state());
   SET_LCD1602_RES_HIGHT();
   SET_LCD1602_RW_LOW();
   SET_LCD1602_EN_LOW();
@@ -62,22 +50,27 @@ void lcd1602_write_data(uint8_t data)
   SET_LCD1602_EN_LOW();
 }
 
-void lcd1602_write_string(uint8_t x,uint8_t y,uint8_t *str)
+void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t data)
 {
-  uint8_t addr = 0;
-  if(y == 0)
-  {
-    addr = 0x80 + x;
+  lcd1602_write_cmd(0x80);
+  if (y == 0) {
+    lcd1602_write_cmd(0x80 + x);
+  } else {
+    lcd1602_write_cmd(0x80 + 0x40 + x);
   }
-  else if(y == 1)
-  {
-    addr = 0x80+0x40+x;
+  lcd1602_write_data(data);
+}
+
+void lcd1602_write_string(uint8_t x, uint8_t y, uint8_t* str)
+{
+  lcd1602_write_cmd(0x80);
+  if(y == LCD1602_FIRST_ROW) {
+    lcd1602_write_cmd(0x80 + x);
+  } else {
+    lcd1602_write_cmd(0xC0 + x);
   }
 
-  lcd1602_write_cmd(addr);
-
-  while(*str != '\0')
-  {
+  while (*str != '\0') {
     lcd1602_write_data(*str);
     str++;
   }

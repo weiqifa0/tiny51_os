@@ -5,9 +5,14 @@
 #ifndef __PLATFORM_HEAD_H
 #define __PLATFORM_HEAD_H
 
-#include "platform_type.h"
-//#include "stc89c52.h"
-#include "stc8h8k64u.h"
+#include "../chip_config/user_config.h"
+#include "general_type.h"
+
+#if CHIP_TYPE_STC8H8K64U
+#include "../chip_config/stc8h8k64u.h"
+#elif CHIP_TYPE_STC89C52
+#include "../chip_config/stc89c52.h"
+#endif
 
 #define CPU_MCLK 110592 //HZ
 
@@ -34,12 +39,34 @@
 #define GPIO_HIGH (1)
 #define GPIO_LOW  (0)
 
+enum TINY51_OS_GPIO_MODE {
+  GPIO_GENERAL_PURPOSE_INPUT_OUTPUT ,
+  GPIO_PUSH_PULL_OUTPUT,
+  GPIO_HIGH_INPEDANCE_INPUT,
+  GPIO_OPEN_COLLECTOR_OUTPUT
+};
+
 void platform_timer_init_10ms(void);
 void platform_delay_xms(uint16_t ms);
-void platform_set_gpio_inout(uint8_t gpio_x_num, uint8_t gpio_y_num);
+void platform_set_gpio_mode(uint8_t gpio_x_num, uint8_t gpio_y_num, enum TINY51_OS_GPIO_MODE mode);
 void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value);
+void platform_set_gpio_pull_up_capacity(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);
 
 #define RAM_RANGE_IDATA __idata
+
+#define SET_REGISTER_PU_VALUE(x, y, value) \
+    do { \
+        switch (x) { \
+            case 0: P0PU = (P0PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 1: P1PU = (P1PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 2: P2PU = (P2PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 3: P3PU = (P3PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 4: P4PU = (P4PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 5: P5PU = (P5PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 6: P6PU = (P6PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 7: P7PU = (P7PU & ~(1 << y)) | ((value << y) & 0xFF); break; \
+        } \
+    } while (0)
 
 #define SET_REGISTER_M0_VALUE(x, y, value) \
     do { \
