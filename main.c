@@ -28,42 +28,116 @@ void task1(void)
 
 void task2(void)
 {
-  set_led_num(2, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(2, TRUE);
+  }
+  else
+  {
+    set_led_num(2, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void task3(void)
 {
-  set_led_num(3, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(3, TRUE);
+  }
+  else
+  {
+    set_led_num(3, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void task4(void)
 {
-  set_led_num(4, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(4, TRUE);
+  }
+  else
+  {
+    set_led_num(4, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void task5(void)
 {
-  set_led_num(5, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(5, TRUE);
+  }
+  else
+  {
+    set_led_num(5, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void task6(void)
 {
-  set_led_num(6, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(6, TRUE);
+  }
+  else
+  {
+    set_led_num(6, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void task7(void)
 {
-  set_led_num(7, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(7, TRUE);
+  }
+  else
+  {
+    set_led_num(7, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void task8(void)
 {
- set_led_num(8, TRUE);
+  static uint8_t task1_tmp = 0;
+  if (task1_tmp)
+  {
+    set_led_num(8, TRUE);
+  }
+  else
+  {
+    set_led_num(8, FALSE);
+  }
+  task1_tmp = !task1_tmp;
 }
 
 void main(void)
 {
+  uint8_t loop = 1;
   led_init();
+
+  set_led_num(1, TRUE);
+  set_led_num(2, TRUE);
+  set_led_num(3, TRUE);
+  set_led_num(4, TRUE);
+  set_led_num(5, TRUE);
+  set_led_num(6, TRUE);
+  set_led_num(7, TRUE);
+  set_led_num(8, TRUE);
+
   lcd1602_init();
   lcd1602_position_x_y(0);
   lcd1602_write_string(5, 0, "LAB1964");
@@ -78,6 +152,7 @@ void main(void)
   tiny51_register_task_scheduling((unsigned int)task6, 200);
   tiny51_register_task_scheduling((unsigned int)task7, 1000);
   tiny51_register_task_scheduling((unsigned int)task8, 700);
+  set_led_num(7, FALSE);
   for (;;) {
     tiny51_task_scheduling();
   }
@@ -85,7 +160,7 @@ void main(void)
 
 void platform_timer_init_10us_interrupt(void)	__interrupt (1)
 {
-  int i;
+  uint8_t i;
   for (i = 0; i < scheduling_core_t.register_task_count; i++) {
     scheduling_core_t.task_sp[i].heartbeat_count_per_1ms++;
   }

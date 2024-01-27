@@ -19,7 +19,16 @@ bool lcd1602_busy_state(void)
 
 void lcd1602_write_cmd(uint8_t cmd)
 {
-  while (lcd1602_busy_state());
+  uint8_t c = 0;
+  while (lcd1602_busy_state())
+  {
+    platform_delay_xms(300);
+    c++;
+    if (c >= 10)
+    {
+      return;
+    }
+  }
   SET_LCD1602_RES_LOW();
   SET_LCD1602_RW_LOW();
   SET_LCD1602_EN_LOW();
@@ -38,7 +47,16 @@ void lcd1602_position_x_y(uint8_t positon)
 
 void lcd1602_write_data(uint8_t data)
 {
-  while (lcd1602_busy_state());
+  uint8_t c = 0;
+  while (lcd1602_busy_state())
+  {
+    platform_delay_xms(300);
+    c++;
+    if (c >= 10)
+    {
+      return;
+    }
+  }
   SET_LCD1602_RES_HIGHT();
   SET_LCD1602_RW_LOW();
   SET_LCD1602_EN_LOW();
@@ -87,4 +105,28 @@ void lcd1602_init(void)
   lcd1602_write_cmd(0x01);
   platform_delay_xms(1);
   platform_delay_xms(10);
+}
+
+void lcd1602_gpio_init(void)
+{
+  // 1602 BL
+  platform_set_gpio_mode(7, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_pull_up_resister(7, 4, TRUE);
+  platform_set_gpio_value(7, 4, GPIO_HIGH);
+  platform_set_gpio_mode(4, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_pull_up_resister(4, 1, TRUE);
+  platform_set_gpio_value(4, 1, GPIO_LOW);
+
+  // 1602 gpio init
+  platform_set_gpio_mode(4, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(4, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(4, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(2, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
 }

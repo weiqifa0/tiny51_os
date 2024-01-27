@@ -31,5 +31,6 @@ void lcd1602_write_data(uint8_t data);
 void lcd1602_init(void);
 void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t data);
 void lcd1602_write_string(uint8_t x,uint8_t y,uint8_t *str);
+void lcd1602_gpio_init(void);
 
 #endif //_LCD1602_H
