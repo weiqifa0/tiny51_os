@@ -9,4 +9,5 @@
 
 void uart_init(void);
 void uart_write(char data);
+void uart_clear_write_busy(void);
 #endif

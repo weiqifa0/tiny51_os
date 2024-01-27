@@ -101,11 +101,11 @@ void task7(void)
   static uint8_t task1_tmp = 0;
   if (task1_tmp)
   {
-    set_led_num(7, TRUE);
+    // set_led_num(7, TRUE);
   }
   else
   {
-    set_led_num(7, FALSE);
+    // set_led_num(7, FALSE);
   }
   task1_tmp = !task1_tmp;
 }
@@ -122,6 +122,7 @@ void task8(void)
     set_led_num(8, FALSE);
   }
   task1_tmp = !task1_tmp;
+  //uart_write('A');
 }
 
 void main(void)
@@ -138,9 +139,12 @@ void main(void)
   set_led_num(7, TRUE);
   set_led_num(8, TRUE);
 
+  lcd1602_gpio_init();
   lcd1602_init();
   lcd1602_position_x_y(0);
   lcd1602_write_string(5, 0, "LAB1964");
+
+  uart_init();
 
   platform_timer_init_10ms();
   tiny51_init_task_scheduling();
@@ -152,9 +156,12 @@ void main(void)
   tiny51_register_task_scheduling((unsigned int)task6, 200);
   tiny51_register_task_scheduling((unsigned int)task7, 1000);
   tiny51_register_task_scheduling((unsigned int)task8, 700);
-  set_led_num(7, FALSE);
+
   for (;;) {
+    set_led_num(7, FALSE);
     tiny51_task_scheduling();
+    set_led_num(7, TRUE);
+    //uart_write('A');
   }
 }
 
@@ -167,4 +174,18 @@ void platform_timer_init_10us_interrupt(void)	__interrupt (1)
 
   TH0 = 0XFC;
   TL0 = 0X18;
+}
+
+void platform_uart_interrupt(void) __interrupt(4)
+{
+  if (TI)
+  {
+    uart_clear_write_busy();
+    TI = 0;
+  }
+  if (RI)
+  {
+    RI = 0;
+  }
+  //ring_buff_insert(p_ring_buff, SBUF);
 }
