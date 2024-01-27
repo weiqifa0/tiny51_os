@@ -22,4 +22,4 @@ lcd1602.rel:./drivers/lcd1602.c
 
 .PHONY:clean
 clean:
-	rm -rf *.bin *.hex *.asm *.ihx *.lk *.lst *.map *.mem *.rel *.rst *.sym
+	rm -rf *.bin *.hex *.asm *.ihx *.lk *.lst *.map *.mem *.rel *.rst *.sym *.cdb *.omf

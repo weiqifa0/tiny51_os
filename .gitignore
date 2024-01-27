@@ -10,3 +10,4 @@
 *.rst
 *.sym
 .DS_Store
+.vscode/*
