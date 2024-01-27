@@ -9,6 +9,8 @@
 #include "drivers/lcd1602.h"
 #include "drivers/uart.h"
 
+char tmp = '1';
+
 void task0(void)
 {
   while (1)
@@ -36,19 +38,30 @@ void task1(void)
 
 void task2(void)
 {
+
   while (1)
   {
+    TR0 = 0;
+    ET0 = 0;
+    EA = 0;
+    lcd1602_write_char(5, 1, tmp);
+    TR0 = 1;
+    ET0 = 1;
+    EA = 1;
+    if (tmp++ >= '9'){
+      tmp = '1';
+    }
     platform_set_gpio_value(0, 5, GPIO_LOW);
     //uart_write('2');
-    platform_delay_xms(1000);
+    platform_delay_xms(2000);
     platform_set_gpio_value(0, 5, GPIO_HIGH);
-    platform_delay_xms(1000);
+    platform_delay_xms(2000);
   }
 }
 
 void tiny51_gpio_init(void)
 {
-  // gpio init
+  // gpio led init
   platform_set_gpio_mode(0, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(0, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(0, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
@@ -58,10 +71,22 @@ void tiny51_gpio_init(void)
   platform_set_gpio_mode(1, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(6, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
 
-  // lcd BL
+  platform_set_gpio_value(0, 5, GPIO_LOW);
+  platform_set_gpio_value(0, 6, GPIO_LOW);
+  platform_set_gpio_value(0, 7, GPIO_LOW);
+  platform_set_gpio_value(6, 0, GPIO_LOW);
+  platform_set_gpio_value(6, 1, GPIO_LOW);
+  platform_set_gpio_value(6, 2, GPIO_LOW);
+  platform_set_gpio_value(1, 0, GPIO_LOW);
+  platform_set_gpio_value(6, 3, GPIO_LOW);
+
+  // 1602 BL
   platform_set_gpio_mode(7, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
-  platform_set_gpio_pull_up_capacity(7, 4, 1);
+  platform_set_gpio_pull_up_resister(7, 4, TRUE);
   platform_set_gpio_value(7, 4, GPIO_HIGH);
+  platform_set_gpio_mode(4, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_pull_up_resister(4, 1, TRUE);
+  platform_set_gpio_value(4, 1, GPIO_LOW);
 
   // 1602 gpio init
   platform_set_gpio_mode(4, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
@@ -75,22 +100,57 @@ void tiny51_gpio_init(void)
   platform_set_gpio_mode(2, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(2, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(2, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+
+#if 0
+  // Digital Tube
+  platform_set_gpio_mode(7, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(4, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(0, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(7, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(7, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(0, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(5, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(0, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+
+  platform_set_gpio_value(7, 7, GPIO_LOW);
+  platform_set_gpio_value(4, 6, GPIO_LOW);
+  platform_set_gpio_value(0, 3, GPIO_LOW);
+  platform_set_gpio_value(7, 5, GPIO_LOW);
+  platform_set_gpio_value(7, 6, GPIO_LOW);
+  platform_set_gpio_value(0, 0, GPIO_LOW);
+  platform_set_gpio_value(5, 3, GPIO_LOW);
+  platform_set_gpio_value(0, 2, GPIO_LOW);
+
+  platform_set_gpio_mode(0, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(0, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(5, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_mode(4, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_pull_up_resister(0, 1, TRUE);
+  platform_set_gpio_pull_up_resister(0, 4, TRUE);
+  platform_set_gpio_pull_up_resister(5, 2, TRUE);
+  platform_set_gpio_pull_up_resister(4, 5, TRUE);
+  platform_set_gpio_value(0, 1, GPIO_HIGH);
+  platform_set_gpio_value(0, 4, GPIO_HIGH);
+  platform_set_gpio_value(5, 2, GPIO_HIGH);
+  platform_set_gpio_value(4, 5, GPIO_HIGH);
+#endif
 }
 
 void main(void)
 {
   tiny51_gpio_init();
   lcd1602_init();
-  // lcd1602_write_char(5, 0, '1');
-  // lcd1602_write_char(6, 0, '9');
-  // lcd1602_write_char(7, 0, '6');
-  // lcd1602_write_char(8, 0, '4');
-  // lcd1602_write_char(5, 1, 'l');
-  // lcd1602_write_char(6, 1, 'a');
-  // lcd1602_write_char(7, 1, 'b');
+
+  lcd1602_write_char(5, 0, '1');
+  lcd1602_write_char(6, 0, '9');
+  lcd1602_write_char(7, 0, '6');
+  lcd1602_write_char(8, 0, '4');
+  lcd1602_write_char(5, 1, 'l');
+  lcd1602_write_char(6, 1, 'a');
+  lcd1602_write_char(7, 1, 'b');
+
   lcd1602_write_string(0, 0, "12:51");
   lcd1602_write_string(0, 1, "1964Lab");
-
   platform_timer_init_10ms();
   uart_init();
   tiny51_init_task_scheduling();

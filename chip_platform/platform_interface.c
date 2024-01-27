@@ -55,7 +55,7 @@ void platform_set_gpio_mode(uint8_t gpio_x_num, uint8_t gpio_y_num, enum TINY51_
   }
 }
 
-void platform_set_gpio_pull_up_capacity(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value)
+void platform_set_gpio_pull_up_resister(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value)
 {
   SET_REGISTER_PU_VALUE(gpio_x_num, gpio_y_num, value);
 }
@@ -63,4 +63,9 @@ void platform_set_gpio_pull_up_capacity(uint8_t gpio_x_num, uint8_t gpio_y_num, 
 void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value)
 {
   SET_GPIO_OUTPUT_VALUE(gpio_x_num, gpio_y_num, gpio_value);
+}
+
+void platform_set_gpio_driver_capability(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value)
+{
+  SET_GPIO_DRIVE_CAPABILITY(gpio_x_num, gpio_y_num, value);
 }

@@ -13,4 +13,4 @@
 *.cdb
 *.omf
 .DS_Store
-*.vscode/
+.vscode/*

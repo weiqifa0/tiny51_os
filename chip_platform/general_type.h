@@ -10,6 +10,8 @@ typedef unsigned int uint16_t;
 typedef __bit bool;
 
 #define NULL (void *)0
+#define TRUE (1)
+#define FALSE (0)
 
 #define PLATFORM_UNUSED(X) (X = X)
 

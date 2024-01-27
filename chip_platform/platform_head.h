@@ -46,13 +46,33 @@ enum TINY51_OS_GPIO_MODE {
   GPIO_OPEN_COLLECTOR_OUTPUT
 };
 
+enum TINY51_OS_GPIO_DRIVER {
+  GPIO_HIGH_DRIVER = 0,
+  GPIO_LOW_DRIVER = 1
+};
+
 void platform_timer_init_10ms(void);
 void platform_delay_xms(uint16_t ms);
 void platform_set_gpio_mode(uint8_t gpio_x_num, uint8_t gpio_y_num, enum TINY51_OS_GPIO_MODE mode);
 void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value);
-void platform_set_gpio_pull_up_capacity(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);
+void platform_set_gpio_pull_up_resister(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);
+void platform_set_gpio_driver_capability(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);
 
 #define RAM_RANGE_IDATA __idata
+
+#define SET_GPIO_DRIVE_CAPABILITY(x, y, value) \
+    do { \
+        switch (x) { \
+            case 0: P0DR = (P0DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 1: P1DR = (P1DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 2: P2DR = (P2DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 3: P3DR = (P3DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 4: P4DR = (P4DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 5: P5DR = (P5DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 6: P6DR = (P6DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+            case 7: P7DR = (P7DR & ~(1 << y)) | ((value << y) & 0xFF); break; \
+        } \
+    } while (0)
 
 #define SET_REGISTER_PU_VALUE(x, y, value) \
     do { \
