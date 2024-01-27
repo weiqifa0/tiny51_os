@@ -9,4 +9,8 @@
 *.rel
 *.rst
 *.sym
+*.adb
+*.cdb
+*.omf
 .DS_Store
+.vscode/*
