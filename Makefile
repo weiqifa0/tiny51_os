@@ -8,8 +8,8 @@ flash:clean tiny51_os.hex
 tiny51_os.hex:main.ihx
 	packihx main.ihx > main.hex
 
-main.ihx:main.c task_scheduling_core.rel platform_interface.rel lcd1602.rel uart.rel eeprom.rel gpio_i2c_interface.rel key.rel ring_buff.rel
-	$(CC) main.c task_scheduling_core.rel platform_interface.rel lcd1602.rel uart.rel eeprom.rel gpio_i2c_interface.rel key.rel ring_buff.rel
+main.ihx:main.c task_scheduling_core.rel platform_interface.rel lcd1602.rel uart.rel eeprom.rel gpio_i2c_interface.rel key.rel ring_buff.rel led.rel
+	$(CC) main.c task_scheduling_core.rel platform_interface.rel lcd1602.rel uart.rel eeprom.rel gpio_i2c_interface.rel key.rel ring_buff.rel led.rel
 
 task_scheduling_core.rel:./task_scheduling_core/task_scheduling_core.c
 	$(CC) -c ./task_scheduling_core/task_scheduling_core.c
@@ -33,7 +33,10 @@ gpio_i2c_interface.rel:./driver/gpio_i2c_interface.c
 	$(CC) -c ./driver/gpio_i2c_interface.c
 
 ring_buff.rel:./module/ring_buff.c
-	$(CC) -c .//module/ring_buff.c
+	$(CC) -c ./module/ring_buff.c
+
+led.rel:./device/led.c
+	$(CC) -c ./device/led.c
 
 .PHONY:clean
 clean:
