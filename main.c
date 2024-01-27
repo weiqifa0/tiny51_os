@@ -6,20 +6,30 @@
 #include "chip_platform/platform_head.h"
 #include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
-#include "drivers/lcd1602.h"
-#include "drivers/uart.h"
+#include "device/lcd1602.h"
+#include "device/uart.h"
+#include "device/key.h"
+#include "module/ring_buff.h"
+
+struct ring_buff* p_ring_buff = NULL;
 
 char tmp = '1';
-
+char uart_get = '\0';
 void task0(void)
 {
   while (1)
   {
-    //uart_write('1');
+    uart_write(tmp);
     platform_set_gpio_value(0, 7, GPIO_HIGH);
     platform_delay_xms(300);
     platform_set_gpio_value(0, 7, GPIO_LOW);
     platform_delay_xms(300);
+    // uart_get = ring_buff_get(p_ring_buff);
+    // if (uart_get > 0)
+    // {
+    //   uart_write(uart_get);
+    //   lcd1602_write_char(8, 1, uart_get);
+    // }
   }
 }
 
@@ -27,12 +37,14 @@ void task1(void)
 {
   while (1)
   {
-
-    //uart_write('1');
-    platform_set_gpio_value(0, 6, GPIO_HIGH);
-    platform_delay_xms(300);
-    platform_set_gpio_value(0, 6, GPIO_LOW);
-    platform_delay_xms(300);
+    if (get_sw1_key_pressed()) {
+      platform_set_gpio_value(0, 6, GPIO_HIGH);
+      platform_set_gpio_value(1, 3, GPIO_LOW);
+      platform_delay_xms(3);
+      platform_set_gpio_value(1, 3, GPIO_HIGH);
+      platform_delay_xms(3);
+      platform_set_gpio_value(0, 6, GPIO_LOW);
+    }
   }
 }
 
@@ -48,13 +60,16 @@ void task2(void)
     TR0 = 1;
     ET0 = 1;
     EA = 1;
-    if (tmp++ >= '9'){
+    if (tmp++ >= '9')
+    {
       tmp = '1';
     }
     platform_set_gpio_value(0, 5, GPIO_LOW);
+
     //uart_write('2');
     platform_delay_xms(2000);
     platform_set_gpio_value(0, 5, GPIO_HIGH);
+
     platform_delay_xms(2000);
   }
 }
@@ -101,6 +116,9 @@ void tiny51_gpio_init(void)
   platform_set_gpio_mode(2, 6, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(2, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
 
+  //BUZZER
+  platform_set_gpio_mode(1, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
+  platform_set_gpio_value(1, 3, GPIO_HIGH);
 #if 0
   // Digital Tube
   platform_set_gpio_mode(7, 7, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
@@ -136,28 +154,28 @@ void tiny51_gpio_init(void)
 #endif
 }
 
+void module_init(void)
+{
+  p_ring_buff = ring_buff_init();
+}
+
 void main(void)
 {
   tiny51_gpio_init();
   lcd1602_init();
-
-  lcd1602_write_char(5, 0, '1');
-  lcd1602_write_char(6, 0, '9');
-  lcd1602_write_char(7, 0, '6');
-  lcd1602_write_char(8, 0, '4');
-  lcd1602_write_char(5, 1, 'l');
-  lcd1602_write_char(6, 1, 'a');
-  lcd1602_write_char(7, 1, 'b');
-
-  lcd1602_write_string(0, 0, "12:51");
-  lcd1602_write_string(0, 1, "1964Lab");
+  lcd1602_write_string(0, 0, "1964Lab");
   platform_timer_init_10ms();
+
   uart_init();
+
   tiny51_init_task_scheduling();
   tiny51_register_task_scheduling(1, task0);
   tiny51_register_task_scheduling(2, task1);
   tiny51_register_task_scheduling(3, task2);
   tiny51_task_start(0);
+
+  module_init();
+
   while (1)
   {
     // /* code */
@@ -184,6 +202,7 @@ void main(void)
     // platform_delay_xms(1000);
   }
 
+  ring_buff_destory(p_ring_buff);
 }
 
 void platform_timer_init_10ms_interrupt(void) __interrupt(1)
@@ -204,5 +223,5 @@ void platform_timer_init_10ms_interrupt(void) __interrupt(1)
 void platform_uart_interrupt(void) __interrupt(4)
 {
   RI = 0;
-  P1 = SBUF;
+  ring_buff_insert(p_ring_buff, SBUF);
 }
