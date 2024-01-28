@@ -7,7 +7,9 @@
 
 #include "../chip_platform/platform_head.h"
 
-void uart_init(void);
+void uart_init(unsigned int baudrate);
 void uart_write(char data);
 void uart_clear_write_busy(void);
+void uart_write_str(char* str);
+// extern void uartISR(void) __interrupt (4);
 #endif

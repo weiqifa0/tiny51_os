@@ -4,30 +4,57 @@
 */
 
 #include "uart.h"
+#include "led.h"
+#include "../chip_platform/platform_head.h"
 
 uint8_t uart_send_busy = 0;
 
-void uart_init(void)
+void uart_init(unsigned int baudrate)
 {
-  TMOD=0x21;		   //用定时器设置串口波特率	   9600
-  TH1=0xfd;
-  TL1=0xfd;
-  TR1=1;
-  REN=1;          //串口初始化
-  SM0=0;
-  SM1=1;
-  // EA=1;           //开启总中断
-  ES=1;
+  SCON = 0x50; // 设置串口工作方式为1
+  T2L = 0xE8;
+  T2H = 0xFF;
+  AUXR = 0x15;
+  ES = 1;
+  TR1 = 1;
+  EA = 1;
 }
 
 void uart_write(char data)
 {
-  while (uart_send_busy);
-  uart_send_busy = 1;
   SBUF = data;
+  while (TI);
+}
+
+void uart_write_str(char* str)
+{
+  while (*str)
+  {
+    uart_write(*str++);
+  }
 }
 
 void uart_clear_write_busy(void)
 {
   uart_send_busy = 0;
 }
+
+// void uartISR(void) __interrupt (4)
+// {
+//   char tmp;
+//   EA = 0;
+//   set_led_num(8, FALSE);
+//   if (TI)
+//   {
+//     TI = 0;
+//   }
+//   if (RI)
+//   {
+//     tmp = SBUF;
+//     RI = 0;
+//     SBUF = tmp;
+//   }
+//   platform_delay_xms(200);
+//   set_led_num(8, TRUE);
+//   EA = 1;
+// }

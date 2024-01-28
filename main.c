@@ -12,6 +12,11 @@
 #include "module/ring_buff.h"
 #include "device/led.h"
 
+void platform_uart_interrupt() __interrupt (4)
+{
+  set_led_num(8, FALSE);
+}
+
 void task1(void)
 {
   static uint8_t task1_tmp = 0;
@@ -101,28 +106,19 @@ void task7(void)
   static uint8_t task1_tmp = 0;
   if (task1_tmp)
   {
-    // set_led_num(7, TRUE);
+    set_led_num(7, TRUE);
   }
   else
   {
-    // set_led_num(7, FALSE);
+    set_led_num(7, FALSE);
   }
   task1_tmp = !task1_tmp;
 }
 
 void task8(void)
 {
-  static uint8_t task1_tmp = 0;
-  if (task1_tmp)
-  {
-    set_led_num(8, TRUE);
-  }
-  else
-  {
-    set_led_num(8, FALSE);
-  }
-  task1_tmp = !task1_tmp;
   //uart_write('A');
+  platform_delay_xms(1000);
 }
 
 void main(void)
@@ -144,9 +140,9 @@ void main(void)
   lcd1602_position_x_y(0);
   lcd1602_write_string(5, 0, "LAB1964");
 
-  uart_init();
-
   platform_timer_init_10ms();
+  uart_init(115200);
+
   tiny51_init_task_scheduling();
   tiny51_register_task_scheduling((unsigned int)task1, 3000);
   tiny51_register_task_scheduling((unsigned int)task2, 200);
@@ -158,10 +154,9 @@ void main(void)
   tiny51_register_task_scheduling((unsigned int)task8, 700);
 
   for (;;) {
-    set_led_num(7, FALSE);
     tiny51_task_scheduling();
-    set_led_num(7, TRUE);
-    //uart_write('A');
+    //uart_write_str("1213123124345346456");
+    //platform_delay_xms(1000);
   }
 }
 
@@ -176,16 +171,34 @@ void platform_timer_init_10us_interrupt(void)	__interrupt (1)
   TL0 = 0X18;
 }
 
-void platform_uart_interrupt(void) __interrupt(4)
-{
-  if (TI)
-  {
-    uart_clear_write_busy();
-    TI = 0;
-  }
-  if (RI)
-  {
-    RI = 0;
-  }
-  //ring_buff_insert(p_ring_buff, SBUF);
-}
+// void uartISR(void) __interrupt (4)
+// {
+//   char tmp;
+//   EA = 0;
+//   set_led_num(8, FALSE);
+//   if (TI)
+//   {
+//     TI = 0;
+//   }
+//   if (RI)
+//   {
+//     tmp = SBUF;
+//     RI = 0;
+//     SBUF = tmp;
+//   }
+//   platform_delay_xms(200);
+//   set_led_num(8, TRUE);
+//   EA = 1;
+//   // set_led_num(8, FALSE);
+//   // if (TI)
+//   // {
+//   //   uart_clear_write_busy();
+//   //   TI = 0;
+//   // }
+//   // if (RI)
+//   // {
+//   //   RI = 0;
+//   //   //ring_buff_insert(p_ring_buff, SBUF);
+//   // }
+//   // set_led_num(8, TRUE);
+// }

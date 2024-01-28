@@ -13,7 +13,6 @@ void platform_timer_init_10ms(void)
   TL0 = 0X18;
   TR0 = 1;
   EA = 1;
-
 }
 
 void platform_delay_xms(uint16_t ms)		//@11.0592MHz
