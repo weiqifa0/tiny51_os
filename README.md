@@ -3,6 +3,8 @@
 - 看链接 https://sdcc.sourceforge.net/
 - sudo apt-get install sdcc
 - sdcc 在各种平台上都有，所以这部分真的是超级爽的。
+- gnu-gcc https://download.csdn.net/download/weiqifa0/88793144
+- gnu-make 在tool 文件夹下
 
 ## 使用帮助
 因为我是用Mac上开发的，所以可以看看我的这篇文章
