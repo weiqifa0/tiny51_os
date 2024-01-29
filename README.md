@@ -1,5 +1,6 @@
 # tiny51_os
 ## 编译器安装
+- 看链接 https://sdcc.sourceforge.net/
 - sudo apt-get install sdcc
 - sdcc 在各种平台上都有，所以这部分真的是超级爽的。
 
