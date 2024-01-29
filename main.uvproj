@@ -355,9 +355,63 @@
         </Group>
         <Group>
           <GroupName>chip_platform</GroupName>
+          <Files>
+            <File>
+              <FileName>platform_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\chip_platform\platform_interface.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>task_scheduling_core</GroupName>
+          <Files>
+            <File>
+              <FileName>task_scheduling_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task_scheduling_core\task_scheduling_core.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>eeprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd1602.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\lcd1602.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>driver</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio_i2c_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\gpio_i2c_interface.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

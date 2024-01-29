@@ -9,10 +9,20 @@ void platform_timer_init_10ms(void)
 {
   TMOD = 0x21;
   IE |= 0x82;
-  TH0 = 0XFC; //给定时器赋初值，定时 1ms
+  TH0 = 0XFC;
   TL0 = 0X18;
   TR0 = 1;
   EA = 1;
+}
+
+void tiny51_os_event(uint8_t on)
+{
+  TR0 = on;
+  EA = on;
+  if (!on) {
+    TH0 = 0XFC;
+    TL0 = 0X18;
+  }
 }
 
 void platform_delay_xms(uint16_t ms)		//@11.0592MHz

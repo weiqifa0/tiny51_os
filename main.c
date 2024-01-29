@@ -110,13 +110,14 @@ void task7(void)
 
 void task8(void)
 {
-  //uart_write('A');
-  platform_delay_xms(1000);
+  //printf("task8888\n");
+  putchar('8');
+  putchar('8');putchar('8');putchar('8');putchar('8');putchar('8');putchar('8');putchar('8');
+  //uart_write_str("task8\n");
 }
 
 void main(void)
 {
-  uint8_t loop = 1;
   led_init();
 
   set_led_num(1, TRUE);
@@ -134,7 +135,9 @@ void main(void)
   lcd1602_write_string(5, 0, "LAB1964");
 
   platform_timer_init_10ms();
-  uart_init(115200);
+  uart_init();
+
+  printf("main start...\n");
 
   tiny51_init_task_scheduling();
   tiny51_register_task_scheduling((unsigned int)task1, 3000);
@@ -148,8 +151,6 @@ void main(void)
 
   for (;;) {
     tiny51_task_scheduling();
-    //uart_write_str("1213123124345346456");
-    //platform_delay_xms(1000);
   }
 }
 #if COMPLILE_SDCC
@@ -173,5 +174,9 @@ void platform_uart_interrupt() __interrupt (4)
 void platform_uart_interrupt() interrupt 4
 #endif
 {
-  set_led_num(8, FALSE);
+  char read = '\0';
+  if (RI) {
+    read = SBUF;
+    RI = 0;
+  }
 }

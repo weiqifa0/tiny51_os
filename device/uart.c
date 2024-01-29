@@ -3,58 +3,34 @@
 ** Created by crisqifawei 2023
 */
 
-#include "uart.h"
-#include "led.h"
 #include "../chip_platform/platform_head.h"
+#include "uart.h"
 
-uint8_t uart_send_busy = 0;
-
-void uart_init(unsigned int baudrate)
+void uart_init()
 {
-  SCON = 0x50; // ËÆæÁΩÆ‰∏≤Âè£Â∑•‰ΩúÊñπÂºè‰∏∫1
-  T2L = 0xE8;
-  T2H = 0xFF;
-  AUXR = 0x15;
-  ES = 1;
-  TR1 = 1;
+  SCON = 0x50;
+  T2L = 0xe8;                                 //65536-11059200/115200/4=0FFE8H
+  T2H = 0xff;
+  AUXR = 0x15;                                //∆Ù∂Ø∂® ±∆˜
+  ES = 0;                                     // πƒ‹¥Æø⁄÷–∂œ
   EA = 1;
 }
 
 void uart_write(char encode)
 {
   SBUF = encode;
-  while (TI);
+  while(TI == 0);
+  TI = 0;
 }
 
-void uart_write_str(char* str)
+void uart_write_str(char * string)
 {
-  while (*str)
-  {
-    uart_write(*str++);
-  }
+  while(*string != '\0') 
+    uart_write(*string++);
 }
 
-void uart_clear_write_busy(void)
+extern char putchar(char c)  //printf∫Ø ˝ª·µ˜”√putchar()
 {
-  uart_send_busy = 0;
+  uart_write(c);
+  return c;
 }
-
-// void uartISR(void) __interrupt (4)
-// {
-//   char tmp;
-//   EA = 0;
-//   set_led_num(8, FALSE);
-//   if (TI)
-//   {
-//     TI = 0;
-//   }
-//   if (RI)
-//   {
-//     tmp = SBUF;
-//     RI = 0;
-//     SBUF = tmp;
-//   }
-//   platform_delay_xms(200);
-//   set_led_num(8, TRUE);
-//   EA = 1;
-// }
