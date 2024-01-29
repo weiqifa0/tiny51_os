@@ -152,8 +152,11 @@ void main(void)
     //platform_delay_xms(1000);
   }
 }
-
+#if COMPLILE_SDCC
+void platform_timer_init_10us_interrupt(void) __interrupt (1)
+#elif COMPLILE_KEIL
 void platform_timer_init_10us_interrupt(void) interrupt 1
+#endif
 {
   uint8_t i;
   for (i = 0; i < scheduling_core_t.register_task_count; i++) {
@@ -164,7 +167,11 @@ void platform_timer_init_10us_interrupt(void) interrupt 1
   TL0 = 0X18;
 }
 
+#if COMPLILE_SDCC
+void platform_uart_interrupt() __interrupt (4)
+#elif COMPLILE_KEIL
 void platform_uart_interrupt() interrupt 4
+#endif
 {
   set_led_num(8, FALSE);
 }

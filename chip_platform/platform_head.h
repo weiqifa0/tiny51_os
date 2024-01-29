@@ -4,11 +4,9 @@
 */
 #ifndef __PLATFORM_HEAD_H__
 #define __PLATFORM_HEAD_H__
-#include "intrins.h"
-#include "stc8h8k64u_keil.h"
 
-#define COMPLILE_SDCC (0)
-#define COMPLILE_KEIL (1)
+#define COMPLILE_SDCC (1)
+#define COMPLILE_KEIL (0)
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
@@ -22,6 +20,7 @@ typedef unsigned int uint16_t;
   #define bool sbit
   #define __NOP__() _nop_()
   #include "stc8h8k64u_keil.h"
+  #include "intrins.h"
   #define RAM_RANGE_IDATA idata
 #endif
 
