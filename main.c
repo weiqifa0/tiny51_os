@@ -4,7 +4,6 @@
 */
 
 #include "chip_platform/platform_head.h"
-#include "machine_hal/machine_config.h"
 #include "task_scheduling_core/task_scheduling_core.h"
 #include "device/lcd1602.h"
 #include "device/uart.h"

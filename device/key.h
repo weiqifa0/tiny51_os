@@ -5,7 +5,6 @@
 #ifndef __KEY_H
 #define __KEY_H
 #include "../chip_platform/platform_head.h"
-#include "../machine_hal/machine_config.h"
 
 void key_gpio_init(void);
 bool get_sw1_key_pressed(void);

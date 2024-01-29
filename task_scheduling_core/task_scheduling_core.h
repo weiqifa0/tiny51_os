@@ -5,9 +5,8 @@
 #ifndef __TASK_SCHEDULING_H
 #define __TASK_SCHEDULING_H
 
-#include <string.h>
-
 #include "../chip_platform/platform_head.h"
+#include <string.h>
 
 #define MAX_TASK_COUNT 12
 #define MAX_TASK_ADDRESS_SIZE_BYTES 2
@@ -15,7 +14,6 @@
 typedef void callback_func(void);
 typedef struct task_obj_st
 {
-
   uint16_t task_address;
   uint16_t task_sleep_ms;
   volatile uint16_t heartbeat_count_per_1ms;

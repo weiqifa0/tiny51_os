@@ -8,10 +8,18 @@
 
 #include "../chip_platform/platform_head.h"
 
+#if COMPLILE_SDCC
 #define LCD1602_DB P2
 #define LCD_RES P4_2
 #define LCD_EN  P4_4
 #define LCD_RW  P4_3
+#elif COMPLILE_KEIL
+#define LCD1602_DB P2
+#define LCD_RES P42
+#define LCD_EN  P44
+#define LCD_RW  P43
+#endif
+
 
 #define SET_LCD1602_RES_LOW() (LCD_RES = 0)
 #define SET_LCD1602_RES_HIGHT() (LCD_RES = 1)

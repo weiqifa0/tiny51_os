@@ -5,14 +5,26 @@
 #ifndef __PLATFORM_HEAD_H
 #define __PLATFORM_HEAD_H
 
-#include "../chip_config/user_config.h"
-#include "general_type.h"
+#define COMPLILE_SDCC (1)
+#define COMPLILE_KEIL (0)
 
-#if CHIP_TYPE_STC8H8K64U
-#include "../chip_config/stc8h8k64u.h"
-#elif CHIP_TYPE_STC89C52
-#include "../chip_config/stc89c52.h"
+typedef unsigned char uint8_t;
+typedef unsigned int uint16_t;
+
+#if COMPLILE_SDCC
+	#include "stc8h8k64u_sdcc.h"
+	typedef __bit bool;
+	#define __NOP__() __asm__("nop")
+#elif COMPLILE_KEIL
+	#define sbit bool
+	#define __NOP__() _nop_()
 #endif
+
+#define NULL (void *)0
+#define TRUE (1)
+#define FALSE (0)
+
+#define PLATFORM_UNUSED(X) (X = X)
 
 #define CPU_MCLK 110592 //HZ
 
@@ -128,4 +140,41 @@ void platform_set_gpio_driver_capability(uint8_t gpio_x_num, uint8_t gpio_y_num,
             case 7: P7 = (P7 & ~(1 << y)) | ((value << y) & 0xFF); break; \
         } \
     } while (0)
+
+#define PLATFORM_NOP_1()  __NOP__()
+#define PLATFORM_NOP_2()  PLATFORM_NOP_1();__NOP__()
+#define PLATFORM_NOP_3()  PLATFORM_NOP_2();__NOP__()
+#define PLATFORM_NOP_4()  PLATFORM_NOP_3();__NOP__()
+#define PLATFORM_NOP_5()  PLATFORM_NOP_4();__NOP__()
+#define PLATFORM_NOP_6()  PLATFORM_NOP_5();__NOP__()
+#define PLATFORM_NOP_7()  PLATFORM_NOP_6();__NOP__()
+#define PLATFORM_NOP_8()  PLATFORM_NOP_7();__NOP__()
+#define PLATFORM_NOP_9()  PLATFORM_NOP_8();__NOP__()
+#define PLATFORM_NOP_10()  PLATFORM_NOP_9();__NOP__()
+#define PLATFORM_NOP_11()  PLATFORM_NOP_10();__NOP__()
+#define PLATFORM_NOP_12()  PLATFORM_NOP_11();__NOP__()
+#define PLATFORM_NOP_13()  PLATFORM_NOP_12();__NOP__()
+#define PLATFORM_NOP_14()  PLATFORM_NOP_13();__NOP__()
+#define PLATFORM_NOP_15()  PLATFORM_NOP_14();__NOP__()
+#define PLATFORM_NOP_16()  PLATFORM_NOP_15();__NOP__()
+#define PLATFORM_NOP_17()  PLATFORM_NOP_16();__NOP__()
+#define PLATFORM_NOP_18()  PLATFORM_NOP_17();__NOP__()
+#define PLATFORM_NOP_19()  PLATFORM_NOP_18();__NOP__()
+#define PLATFORM_NOP_20()  PLATFORM_NOP_19();__NOP__()
+#define PLATFORM_NOP_21()  PLATFORM_NOP_20();__NOP__()
+#define PLATFORM_NOP_22()  PLATFORM_NOP_21();__NOP__()
+#define PLATFORM_NOP_23()  PLATFORM_NOP_22();__NOP__()
+#define PLATFORM_NOP_24()  PLATFORM_NOP_23();__NOP__()
+#define PLATFORM_NOP_25()  PLATFORM_NOP_24();__NOP__()
+#define PLATFORM_NOP_26()  PLATFORM_NOP_25();__NOP__()
+#define PLATFORM_NOP_27()  PLATFORM_NOP_26();__NOP__()
+#define PLATFORM_NOP_28()  PLATFORM_NOP_27();__NOP__()
+#define PLATFORM_NOP_29()  PLATFORM_NOP_28();__NOP__()
+#define PLATFORM_NOP_30()  PLATFORM_NOP_29();__NOP__()
+#define PLATFORM_NOP_31()  PLATFORM_NOP_30();__NOP__()
+#define PLATFORM_NOP_32()  PLATFORM_NOP_31();__NOP__()
+
+#define PLATFORM_NOP(N)   PLATFORM_NOP_##N()
+
+#define PLATFORM_OPEN_IRQ(x) EA = x
 #endif //__PLATFORM_HEAD_H

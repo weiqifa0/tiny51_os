@@ -19,7 +19,7 @@ void platform_delay_xms(uint16_t ms)		//@11.0592MHz
 {
   unsigned char i, j;
   while (ms--) {
-    __asm__("nop");
+    __NOP__();
     i = 2;
     j = 199;
     do {
