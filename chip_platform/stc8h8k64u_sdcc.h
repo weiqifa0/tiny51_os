@@ -2,8 +2,8 @@
 ** Copyright (c) 2023 The tiny51_os project. All rights reserved.
 ** Created by crisqifawei 2023
 */
-#ifndef __STC8H8K64U_H
-#define __STC8H8K64U_H
+#ifndef __STC8H8K64U_SDCC_H
+#define __STC8H8K64U_SDCC_H
 
 
 #include <8051.h>
@@ -290,4 +290,4 @@ SFRX(P7DR, 0xFE2F);
 SFRX(T2L, 0xD7);
 SFRX(T2H, 0xD6);
 
-#endif //__STC8H8K64U_H
+#endif //__STC8H8K64U_SDCC_H

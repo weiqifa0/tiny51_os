@@ -2,22 +2,27 @@
 ** Copyright (c) 2023 The tiny51_os project. All rights reserved.
 ** Created by crisqifawei 2023
 */
-#ifndef __PLATFORM_HEAD_H
-#define __PLATFORM_HEAD_H
+#ifndef __PLATFORM_HEAD_H__
+#define __PLATFORM_HEAD_H__
+#include "intrins.h"
+#include "stc8h8k64u_keil.h"
 
-#define COMPLILE_SDCC (1)
-#define COMPLILE_KEIL (0)
+#define COMPLILE_SDCC (0)
+#define COMPLILE_KEIL (1)
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
 
 #if COMPLILE_SDCC
-	#include "stc8h8k64u_sdcc.h"
-	typedef __bit bool;
-	#define __NOP__() __asm__("nop")
+  #include "stc8h8k64u_sdcc.h"
+  typedef __bit bool;
+  #define __NOP__() __asm__("nop")
+  #define RAM_RANGE_IDATA __idata
 #elif COMPLILE_KEIL
-	#define sbit bool
-	#define __NOP__() _nop_()
+  #define bool sbit
+  #define __NOP__() _nop_()
+  #include "stc8h8k64u_keil.h"
+  #define RAM_RANGE_IDATA idata
 #endif
 
 #define NULL (void *)0
@@ -28,6 +33,7 @@ typedef unsigned int uint16_t;
 
 #define CPU_MCLK 110592 //HZ
 
+#if COMPLILE_SDCC
 #define TINY51_OS_GPIO1_0 P1_0
 #define TINY51_OS_GPIO1_1 P1_1
 #define TINY51_OS_GPIO1_2 P1_2
@@ -45,11 +51,15 @@ typedef unsigned int uint16_t;
 #define TINY51_OS_GPIO0_5 P0_5
 #define TINY51_OS_GPIO0_6 P0_6
 #define TINY51_OS_GPIO0_7 P0_7
+#elif COMPLILE_KEIL
+
+#endif
 
 #define TINY51_OS_GPIO_PORT_2 P2
 
 #define GPIO_HIGH (1)
 #define GPIO_LOW  (0)
+
 
 enum TINY51_OS_GPIO_MODE {
   GPIO_GENERAL_PURPOSE_INPUT_OUTPUT ,
@@ -69,8 +79,6 @@ void platform_set_gpio_mode(uint8_t gpio_x_num, uint8_t gpio_y_num, enum TINY51_
 void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value);
 void platform_set_gpio_pull_up_resister(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);
 void platform_set_gpio_driver_capability(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);
-
-#define RAM_RANGE_IDATA __idata
 
 #define SET_GPIO_DRIVE_CAPABILITY(x, y, value) \
     do { \
@@ -177,4 +185,4 @@ void platform_set_gpio_driver_capability(uint8_t gpio_x_num, uint8_t gpio_y_num,
 #define PLATFORM_NOP(N)   PLATFORM_NOP_##N()
 
 #define PLATFORM_OPEN_IRQ(x) EA = x
-#endif //__PLATFORM_HEAD_H
+#endif //__PLATFORM_HEAD_H__

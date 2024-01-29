@@ -13,4 +13,45 @@
 *.cdb
 *.omf
 .DS_Store
+
+#vscode
 .vscode/*
+
+#*.uvoptx
+#OutputFiledir & Files
+Listings/
+Objects/
+*.crf
+*.d
+*.o
+*.build_log.htm
+*.axf
+*.htm
+*.lnp
+*.dep
+*.map
+*.bin
+*.hex
+*.obj
+*.OBJ
+*.plg
+*.bak
+
+
+#Keil Layout File
+*.uvguix.*
+
+#DebugConfig
+DebugConfig/
+
+#Keil Project screen layout file
+*.uvguix.*
+*.uvgui.*
+
+#JLINK file
+*JLinkLog.txt
+*JLinkSettings.ini
+
+#temp files
+~$*
+*.TMP

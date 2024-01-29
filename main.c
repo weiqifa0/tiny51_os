@@ -2,7 +2,6 @@
 ** Copyright (c) 2023 The tiny51_os project. All rights reserved.
 ** Created by crisqifawei 2023
 */
-
 #include "chip_platform/platform_head.h"
 #include "task_scheduling_core/task_scheduling_core.h"
 #include "device/lcd1602.h"
@@ -10,11 +9,6 @@
 #include "device/key.h"
 #include "module/ring_buff.h"
 #include "device/led.h"
-
-void platform_uart_interrupt() __interrupt (4)
-{
-  set_led_num(8, FALSE);
-}
 
 void task1(void)
 {
@@ -159,7 +153,7 @@ void main(void)
   }
 }
 
-void platform_timer_init_10us_interrupt(void)	__interrupt (1)
+void platform_timer_init_10us_interrupt(void) interrupt 1
 {
   uint8_t i;
   for (i = 0; i < scheduling_core_t.register_task_count; i++) {
@@ -170,34 +164,7 @@ void platform_timer_init_10us_interrupt(void)	__interrupt (1)
   TL0 = 0X18;
 }
 
-// void uartISR(void) __interrupt (4)
-// {
-//   char tmp;
-//   EA = 0;
-//   set_led_num(8, FALSE);
-//   if (TI)
-//   {
-//     TI = 0;
-//   }
-//   if (RI)
-//   {
-//     tmp = SBUF;
-//     RI = 0;
-//     SBUF = tmp;
-//   }
-//   platform_delay_xms(200);
-//   set_led_num(8, TRUE);
-//   EA = 1;
-//   // set_led_num(8, FALSE);
-//   // if (TI)
-//   // {
-//   //   uart_clear_write_busy();
-//   //   TI = 0;
-//   // }
-//   // if (RI)
-//   // {
-//   //   RI = 0;
-//   //   //ring_buff_insert(p_ring_buff, SBUF);
-//   // }
-//   // set_led_num(8, TRUE);
-// }
+void platform_uart_interrupt() interrupt 4
+{
+  set_led_num(8, FALSE);
+}

@@ -9,6 +9,6 @@
 #include "../chip_platform/platform_head.h"
 
 void led_init(void);
-void set_led_num(uint8_t led_num, bool on);
+void set_led_num(uint8_t led_num, uint8_t on);
 
 #endif // __LED_H

@@ -1,9 +1,14 @@
 {
+	"editor.renderControlCharacters": true, //制表符显示->
+	"editor.renderWhitespace": "all", //空格显示...
+	"editor.tabSize": 2,//tab为四个空格
+	"editor.insertSpaces": true, //转为空格
   "C_Cpp_Runner.msvcBatchPath": "",
   "files.associations": {
-		"platform_head.h": "c",
-		"machine_config.h": "c",
-		"stc8h8k64u_sdcc.h": "c",
-		"key.h": "c"
-	}
+    "platform_head.h": "c",
+    "machine_config.h": "c",
+    "stc8h8k64u_sdcc.h": "c",
+    "key.h": "c",
+    "stc8h8k64u_keil.h": "c"
+  }
 }

@@ -11,9 +11,9 @@ void key_gpio_init(void)
   platform_set_gpio_mode(4, 0, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT);
   platform_set_gpio_mode(5, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT);
 }
-bool get_sw1_key_pressed(void)
+uint8_t get_sw1_key_pressed(void)
 {
-  if (P3_2 == FALSE) {
+  if (KEY_1 == FALSE) {
     return TRUE;
   }
   return FALSE;

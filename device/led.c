@@ -18,7 +18,7 @@ void led_init(void)
   platform_set_gpio_mode(6, 3, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
 }
 
-void set_led_num(uint8_t led_num, bool on)
+void set_led_num(uint8_t led_num, uint8_t on)
 {
   switch (led_num)
   {

@@ -20,9 +20,9 @@ void uart_init(unsigned int baudrate)
   EA = 1;
 }
 
-void uart_write(char data)
+void uart_write(char encode)
 {
-  SBUF = data;
+  SBUF = encode;
   while (TI);
 }
 

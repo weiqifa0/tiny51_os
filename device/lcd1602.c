@@ -5,14 +5,14 @@
 
 #include "lcd1602.h"
 
-bool lcd1602_busy_state(void)
+uint8_t lcd1602_busy_state(void)
 {
-  bool busy_state;
+  uint8_t busy_state;
   SET_LCD1602_RES_LOW();
   SET_LCD1602_RW_HIGHT();
   SET_LCD1602_EN_HIGHT();
   PLATFORM_NOP_4();
-  busy_state = (bool)(LCD1602_DB & 0x80);
+  busy_state = (uint8_t)(LCD1602_DB & 0x80);
   SET_LCD1602_EN_LOW();
   return busy_state;
 }
@@ -45,7 +45,7 @@ void lcd1602_position_x_y(uint8_t positon)
   lcd1602_write_cmd(positon| 0x80);
 }
 
-void lcd1602_write_data(uint8_t data)
+void lcd1602_write_data(uint8_t encode)
 {
   uint8_t c = 0;
   while (lcd1602_busy_state())
@@ -61,14 +61,14 @@ void lcd1602_write_data(uint8_t data)
   SET_LCD1602_RW_LOW();
   SET_LCD1602_EN_LOW();
   PLATFORM_NOP_2();
-  LCD1602_DB = data;
+  LCD1602_DB = encode;
   PLATFORM_NOP_4();
   SET_LCD1602_EN_HIGHT();
   PLATFORM_NOP_4();
   SET_LCD1602_EN_LOW();
 }
 
-void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t data)
+void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t encode)
 {
   lcd1602_write_cmd(0x80);
   if (y == LCD1602_FIRST_ROW) {
@@ -76,7 +76,7 @@ void lcd1602_write_char(uint8_t x, uint8_t y, uint8_t data)
   } else {
     lcd1602_write_cmd(0x80 + 0x40 + x);
   }
-  lcd1602_write_data(data);
+  lcd1602_write_data(encode);
 }
 
 void lcd1602_write_string(uint8_t x, uint8_t y, uint8_t* str)
