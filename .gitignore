@@ -45,8 +45,8 @@ Objects/
 DebugConfig/
 
 #Keil Project screen layout file
-*.uvguix.*
-*.uvgui.*
+#*.uvguix.*
+#*.uvgui.*
 
 #JLINK file
 *JLinkLog.txt

@@ -5,8 +5,8 @@
 #ifndef __PLATFORM_HEAD_H__
 #define __PLATFORM_HEAD_H__
 
-#define COMPLILE_SDCC (1)
-#define COMPLILE_KEIL (0)
+#define COMPLILE_SDCC (0)
+#define COMPLILE_KEIL (1)
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint16_t;
