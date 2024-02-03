@@ -38,6 +38,15 @@ void platform_delay_xms(uint16_t ms)		//@11.0592MHz
   }
 }
 
+void platform_delay_xus(uint16_t us)		//@11.0592MHz
+{
+  while (us--) {
+    __NOP__();
+    __NOP__();
+    __NOP__();
+  }
+}
+
 void platform_set_gpio_mode(uint8_t gpio_x_num, uint8_t gpio_y_num, enum TINY51_OS_GPIO_MODE mode)
 {
   switch (mode)

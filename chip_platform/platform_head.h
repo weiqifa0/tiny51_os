@@ -9,6 +9,7 @@
 #define COMPLILE_KEIL (1)
 
 typedef unsigned char uint8_t;
+typedef char int8_t;
 typedef unsigned int uint16_t;
 
 #if COMPLILE_SDCC
@@ -53,6 +54,7 @@ enum TINY51_OS_GPIO_DRIVER {
 
 void platform_timer_init_10ms(void);
 void platform_delay_xms(uint16_t ms);
+void platform_delay_xus(uint16_t us);
 void platform_set_gpio_mode(uint8_t gpio_x_num, uint8_t gpio_y_num, enum TINY51_OS_GPIO_MODE mode);
 void platform_set_gpio_value(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t gpio_value);
 void platform_set_gpio_pull_up_resister(uint8_t gpio_x_num, uint8_t gpio_y_num, uint8_t value);

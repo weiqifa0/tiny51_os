@@ -9,6 +9,7 @@
 #include "device/key.h"
 #include "module/ring_buff.h"
 #include "device/led.h"
+#include "device/eeprom.h"
 
 void task1(void)
 {
@@ -110,10 +111,22 @@ void task7(void)
 
 void task8(void)
 {
-  //printf("task8888\n");
-  putchar('8');
-  putchar('8');putchar('8');putchar('8');putchar('8');putchar('8');putchar('8');putchar('8');
-  //uart_write_str("task8\n");
+  uint8_t tmp;
+  static uint8_t w = 0;
+  int8_t ret = 0;
+  char buff[64] = {'\0'};
+  #define WRITE_REG 0x0012
+
+  ret = eeprom_write_to_address(0x0012 , 0x67);
+  if (ret < 0) {
+    printf("write error\n");
+  } else {
+    tmp = eeprom_read_from_address(0x0012);
+    printf("EEPROM READ ADDRESS %bx , VALUE =%bx\n", WRITE_REG, tmp);
+    
+  }
+
+  w ++;
 }
 
 void main(void)
@@ -134,6 +147,9 @@ void main(void)
   lcd1602_position_x_y(0);
   lcd1602_write_string(5, 0, "LAB1964");
 
+  i2c_gpio_init();
+  eeprom_init();
+
   platform_timer_init_10ms();
   uart_init();
 
@@ -147,7 +163,7 @@ void main(void)
   tiny51_register_task_scheduling((unsigned int)task5, 3000);
   tiny51_register_task_scheduling((unsigned int)task6, 200);
   tiny51_register_task_scheduling((unsigned int)task7, 1000);
-  tiny51_register_task_scheduling((unsigned int)task8, 700);
+  tiny51_register_task_scheduling((unsigned int)task8, 2000);
 
   for (;;) {
     tiny51_task_scheduling();
