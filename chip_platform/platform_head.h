@@ -8,6 +8,8 @@
 #define COMPLILE_SDCC (0)
 #define COMPLILE_KEIL (1)
 
+#define TINY51_OS_LCD1602 (0)
+
 typedef unsigned char uint8_t;
 typedef char int8_t;
 typedef unsigned int uint16_t;

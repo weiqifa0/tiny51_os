@@ -14,13 +14,20 @@ void i2c_gpio_init(void);
 #define I2C_SDA P14
 #define I2C_SCL P15
 #endif
+void i2c_interface_init();
+void Wait();
+void Start();
 
-void i2c_gpio_init(void);
-void i2c_start(void);
-void i2c_stop(void);
-int8_t i2c_write_byte(uint8_t dat);
-uint8_t i2c_read_byte(void);
-void i2c_answer_ack(uint8_t answer_to_device);
+void SendData(char dat);
+
+void RecvACK();
+
+char RecvData();
+
+void SendACK();
+
+void SendNAK();
+void Stop();
 
 
 

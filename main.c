@@ -11,6 +11,8 @@
 #include "device/led.h"
 #include "device/eeprom.h"
 
+uint8_t g_tmp;
+
 void task1(void)
 {
   static uint8_t task1_tmp = 0;
@@ -111,26 +113,12 @@ void task7(void)
 
 void task8(void)
 {
-  uint8_t tmp;
-  static uint8_t w = 0;
-  int8_t ret = 0;
-  char buff[64] = {'\0'};
-  #define WRITE_REG 0x0012
-
-  ret = eeprom_write_to_address(0x0012 , 0x67);
-  if (ret < 0) {
-    printf("write error\n");
-  } else {
-    tmp = eeprom_read_from_address(0x0012);
-    printf("EEPROM READ ADDRESS %bx , VALUE =%bx\n", WRITE_REG, tmp);
-    
-  }
-
-  w ++;
+  
 }
 
 void main(void)
 {
+  uint8_t tmp = 0;
   led_init();
 
   set_led_num(1, TRUE);
@@ -142,13 +130,17 @@ void main(void)
   set_led_num(7, TRUE);
   set_led_num(8, TRUE);
 
+#if TINY51_OS_LCD1602
   lcd1602_gpio_init();
   lcd1602_init();
   lcd1602_position_x_y(0);
   lcd1602_write_string(5, 0, "LAB1964");
-
-  i2c_gpio_init();
+#endif
+  i2c_interface_init();
   eeprom_init();
+
+  eeprom_write_to_address(0x12, 0xA9);
+
 
   platform_timer_init_10ms();
   uart_init();
@@ -167,6 +159,9 @@ void main(void)
 
   for (;;) {
     tiny51_task_scheduling();
+    g_tmp = eeprom_read_from_address(0x12);
+    printf("EEPROM READ ADDRESS %bx , VALUE =%bx\n", 0x12, g_tmp);
+    //platform_delay_xms(7000);
   }
 }
 #if COMPLILE_SDCC

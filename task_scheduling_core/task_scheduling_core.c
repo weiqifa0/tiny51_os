@@ -41,6 +41,8 @@ void tiny51_start_task_scheduling(uint8_t pid)
 void tiny51_run_task_in_stack(uint16_t ready_to_run_address)
 {
   callback_func* p_run = (callback_func*)ready_to_run_address;
+
   p_run();
+
   PLATFORM_UNUSED(ready_to_run_address);
 }

@@ -8,29 +8,31 @@ void eeprom_init(void)
 
 }
 
-int8_t eeprom_write_to_address(uint8_t dat, uint16_t address)
+void eeprom_write_to_address(uint8_t address, uint8_t dat)
 {
-  int8_t ret = 0;
-  i2c_start();
-  ret |= i2c_write_byte(EEPROM_I2C_ADDRESS);
-  //ret |= i2c_write_byte((uint8_t)(address >> 8));
-  ret |= i2c_write_byte((uint8_t)(address));
-  ret |= i2c_write_byte(dat);
-  i2c_stop();
-  return ret;
+  Start(); 
+  SendData(EEPROM_I2C_ADDRESS);    
+  RecvACK();
+  SendData(address);    
+  RecvACK();
+  SendData(dat); 
+  RecvACK();
+  Stop();  
 }
 
-uint8_t eeprom_read_from_address(uint16_t address)
+uint8_t eeprom_read_from_address(uint8_t address)
 {
-  uint8_t dat;
-  i2c_start();
-  i2c_write_byte(EEPROM_I2C_ADDRESS);
-  //i2c_write_byte((uint8_t)(address >> 8));
-  i2c_write_byte((uint8_t)(address));
-  i2c_start();
-  i2c_write_byte(EEPROM_I2C_ADDRESS + 1);
-  dat = i2c_read_byte();
-  i2c_answer_ack(0);
-  i2c_stop();
+  uint8_t dat = 89;
+  Start();                      
+  SendData(EEPROM_I2C_ADDRESS);           
+  RecvACK();
+  SendData(address);                     
+  RecvACK();
+  Start();                              
+  SendData(EEPROM_I2C_ADDRESS_READ);           
+  RecvACK();
+  dat = RecvData();                   
+  SendNAK();
+  Stop();                          
   return dat;
 }

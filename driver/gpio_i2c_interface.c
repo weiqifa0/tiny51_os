@@ -3,113 +3,63 @@
 ** Created by crisqifawei 2024
 */
 #include "gpio_i2c_interface.h"
-
-void i2c_gpio_init(void)
+void i2c_interface_init()
 {
+  P_SW2 = 0x80;
+  I2CCFG = 0xe0;
+  I2CMSST = 0x00;
   platform_set_gpio_mode(1, 4, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_mode(1, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
 }
 
-void i2c_start(void)
+void Wait()
 {
-   I2C_SDA=1;
-   platform_delay_xus(1);
-   I2C_SCL=1;
-   platform_delay_xus(5);
-
-   I2C_SDA=0;
-   platform_delay_xus(5);
-
-   I2C_SCL=0;
-   platform_delay_xus(2);
+    while (!(I2CMSST & 0x40));
+    I2CMSST &= ~0x40;
 }
 
-void i2c_stop(void)
+void Start()
 {
-   I2C_SDA=0;
-   platform_delay_xus(1);
-   I2C_SCL=1;
-   platform_delay_xus(5);
-
-   I2C_SDA=1;
-   platform_delay_xus(4);
+    I2CMSCR = 0x01;
+    Wait();
 }
 
-
-int8_t i2c_write_byte(uint8_t dat)
+void SendData(char dat)
 {
-  uint8_t i;
-  int8_t answer_ack;
-
-  for (i = 0; i < 8; i++) {
-    if(dat & 0x80) {
-      I2C_SDA = 1;
-    } else{
-      I2C_SDA = 0;
-    }
-    dat <<= 1;
-    platform_delay_xus(1);
-    I2C_SCL=1;
-
-    platform_delay_xus(5);
-
-    I2C_SCL=0;
-  }
-
-  platform_delay_xus(2);
-  I2C_SDA=1;
-  platform_delay_xus(2);
-  I2C_SCL=1;
-  platform_delay_xus(3);
-  if(I2C_SDA == 1) {
-    answer_ack = -1; /*NO ACK*/
-  } else{
-    answer_ack = 1;
-  }
-  I2C_SCL=0;
-  platform_delay_xus(2);
-  return answer_ack;
+    I2CTXD = dat;
+    I2CMSCR = 0x02;
+    Wait();
 }
 
-
-uint8_t i2c_read_byte(void)
+void RecvACK()
 {
-  uint8_t val;
-  uint8_t i;
-
-  val=0;
-  I2C_SDA = 1;
-  for (i = 0; i < 8; i++) {
-    platform_delay_xus(1);
-    I2C_SCL = 0;
-    platform_delay_xus(5);
-    I2C_SCL = 1;
-    platform_delay_xus(3);
-
-    val = val << 1;
-    if(I2C_SDA == 1) {
-      val = val + 1;
-    }
-
-    platform_delay_xus(2);
-  }
-  I2C_SCL = 0;
-  platform_delay_xus(2);
-  return(val);
+    I2CMSCR = 0x03;
+    Wait();
 }
 
-void i2c_answer_ack(uint8_t answer_to_device)
+char RecvData()
 {
-   if(answer_to_device == 0) {
-     I2C_SDA = 0;
-   } else {
-     I2C_SDA = 1;
-   }
-   platform_delay_xus(3);
-   I2C_SCL=1;
+    I2CMSCR = 0x04;
+    Wait();
+    return I2CRXD;
+}
 
-   platform_delay_xus(5);
+void SendACK()
+{
+    I2CMSST = 0x00;
+    I2CMSCR = 0x05;
+    Wait();
+}
 
-   I2C_SCL=0;
-   platform_delay_xus(2);
+void SendNAK()
+{
+    I2CMSST = 0x01;
+    I2CMSCR = 0x05;
+    Wait();
+}
+
+void Stop()
+{
+    I2CMSCR = 0x06;
+    Wait();
 }

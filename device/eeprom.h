@@ -6,7 +6,7 @@
 #include "../driver/gpio_i2c_interface.h"
 
 #define EEPROM_I2C_ADDRESS (0xA0)
-
+#define EEPROM_I2C_ADDRESS_READ (0xA1)
 void eeprom_init(void);
-int8_t eeprom_write_to_address(uint8_t dat, uint16_t address);
-uint8_t eeprom_read_from_address(uint16_t address);
+void eeprom_write_to_address(uint8_t address, uint8_t dat);
+uint8_t eeprom_read_from_address(uint8_t address);
