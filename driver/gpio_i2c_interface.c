@@ -12,54 +12,54 @@ void i2c_interface_init()
   platform_set_gpio_mode(1, 5, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
 }
 
-void Wait()
+void i2c_wait()
 {
-    while (!(I2CMSST & 0x40));
-    I2CMSST &= ~0x40;
+  while (!(I2CMSST & 0x40));
+  I2CMSST &= ~0x40;
 }
 
-void Start()
+void i2c_start()
 {
-    I2CMSCR = 0x01;
-    Wait();
+  I2CMSCR = 0x01;
+  i2c_wait();
 }
 
-void SendData(char dat)
+void i2c_write_byte(char dat)
 {
-    I2CTXD = dat;
-    I2CMSCR = 0x02;
-    Wait();
+  I2CTXD = dat;
+  I2CMSCR = 0x02;
+  i2c_wait();
 }
 
-void RecvACK()
+void i2c_receive_device_ack()
 {
-    I2CMSCR = 0x03;
-    Wait();
+  I2CMSCR = 0x03;
+  i2c_wait();
 }
 
-char RecvData()
+char i2c_read_byte()
 {
-    I2CMSCR = 0x04;
-    Wait();
-    return I2CRXD;
+  I2CMSCR = 0x04;
+  i2c_wait();
+  return I2CRXD;
 }
 
 void SendACK()
 {
-    I2CMSST = 0x00;
-    I2CMSCR = 0x05;
-    Wait();
+  I2CMSST = 0x00;
+  I2CMSCR = 0x05;
+  i2c_wait();
 }
 
-void SendNAK()
+void i2c_host_send_no_ack()
 {
-    I2CMSST = 0x01;
-    I2CMSCR = 0x05;
-    Wait();
+  I2CMSST = 0x01;
+  I2CMSCR = 0x05;
+  i2c_wait();
 }
 
-void Stop()
+void i2c_stop()
 {
-    I2CMSCR = 0x06;
-    Wait();
+  I2CMSCR = 0x06;
+  i2c_wait();
 }

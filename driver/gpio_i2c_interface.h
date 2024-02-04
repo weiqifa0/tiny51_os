@@ -16,18 +16,18 @@ void i2c_gpio_init(void);
 #endif
 void i2c_interface_init();
 void Wait();
-void Start();
+void i2c_start();
 
-void SendData(char dat);
+void i2c_write_byte(char dat);
 
-void RecvACK();
+void i2c_receive_device_ack();
 
-char RecvData();
+char i2c_read_byte();
 
 void SendACK();
 
-void SendNAK();
-void Stop();
+void i2c_host_send_no_ack();
+void i2c_stop();
 
 
 

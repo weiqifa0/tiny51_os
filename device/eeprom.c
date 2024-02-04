@@ -10,29 +10,29 @@ void eeprom_init(void)
 
 void eeprom_write_to_address(uint8_t address, uint8_t dat)
 {
-  Start(); 
-  SendData(EEPROM_I2C_ADDRESS);    
-  RecvACK();
-  SendData(address);    
-  RecvACK();
-  SendData(dat); 
-  RecvACK();
-  Stop();  
+  i2c_start();
+  i2c_write_byte(EEPROM_I2C_ADDRESS);
+  i2c_receive_device_ack();
+  i2c_write_byte(address);
+  i2c_receive_device_ack();
+  i2c_write_byte(dat);
+  i2c_receive_device_ack();
+  i2c_stop();
 }
 
 uint8_t eeprom_read_from_address(uint8_t address)
 {
   uint8_t dat = 89;
-  Start();                      
-  SendData(EEPROM_I2C_ADDRESS);           
-  RecvACK();
-  SendData(address);                     
-  RecvACK();
-  Start();                              
-  SendData(EEPROM_I2C_ADDRESS_READ);           
-  RecvACK();
-  dat = RecvData();                   
-  SendNAK();
-  Stop();                          
+  i2c_start();
+  i2c_write_byte(EEPROM_I2C_ADDRESS);
+  i2c_receive_device_ack();
+  i2c_write_byte(address);
+  i2c_receive_device_ack();
+  i2c_start();
+  i2c_write_byte(EEPROM_I2C_ADDRESS_READ);
+  i2c_receive_device_ack();
+  dat = i2c_read_byte();
+  i2c_host_send_no_ack();
+  i2c_stop();
   return dat;
 }

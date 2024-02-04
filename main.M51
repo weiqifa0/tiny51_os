@@ -52,9 +52,9 @@ LINK MAP OF MODULE:  main (MAIN)
             IDATA   0080H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
-            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0000H     0003H     ABSOLUTE
             CODE    0003H     0008H     UNIT         ?PR?_UART_WRITE?UART
-            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000BH     0003H     ABSOLUTE
             CODE    000EH     0012H     UNIT         ?PR?_TINY51_RUN_TASK_IN_STACK?TASK_SCHEDULING_CORE
             CODE    0020H     0001H     UNIT         ?PR?TASK8?MAIN
             CODE    0021H     0001H     UNIT         ?PR?EEPROM_INIT?EEPROM
@@ -62,7 +62,7 @@ LINK MAP OF MODULE:  main (MAIN)
 BL51 BANKED LINKER/LOCATER V6.22                                                      02/05/2024  00:41:52  PAGE 2
 
 
-            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0023H     0003H     ABSOLUTE
             CODE    0026H     077CH     UNIT         ?PR?_PLATFORM_SET_GPIO_MODE?PLATFORM_INTERFACE
             CODE    07A2H     035CH     UNIT         ?PR?PRINTF?PRINTF
             CODE    0AFEH     0142H     UNIT         ?PR?_PLATFORM_SET_GPIO_PULL_UP_RESISTER?PLATFORM_INTERFACE
@@ -125,7 +125,7 @@ LINK MAP OF MODULE:  main (MAIN)
 OVERLAY MAP OF MODULE:   main (MAIN)
 
 
-SEGMENT                                             BIT_GROUP          DATA_GROUP 
+SEGMENT                                             BIT_GROUP          DATA_GROUP
   +--> CALLED SEGMENT                            START    LENGTH     START    LENGTH
 ------------------------------------------------------------------------------------
 ?C_C51STARTUP                                    -----    -----      -----    -----
@@ -273,9 +273,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:0020H         PUBLIC        task8
   D:00D0H         PUBLIC        PSW
   -------         PROC          TASK1
-  -------         DO            
+  -------         DO
   D:0022H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:14B4H         LINE#         16
   C:14B4H         LINE#         17
   C:14B4H         LINE#         19
@@ -289,9 +289,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:14CFH         LINE#         28
   -------         ENDPROC       TASK1
   -------         PROC          TASK2
-  -------         DO            
+  -------         DO
   D:0023H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:14D0H         LINE#         30
   C:14D0H         LINE#         31
   C:14D0H         LINE#         33
@@ -308,9 +308,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:14EBH         LINE#         42
   -------         ENDPROC       TASK2
   -------         PROC          TASK3
-  -------         DO            
+  -------         DO
   D:0024H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:14ECH         LINE#         44
   C:14ECH         LINE#         45
   C:14ECH         LINE#         47
@@ -324,9 +324,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:1507H         LINE#         56
   -------         ENDPROC       TASK3
   -------         PROC          TASK4
-  -------         DO            
+  -------         DO
   D:0025H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:1508H         LINE#         58
   C:1508H         LINE#         59
   C:1508H         LINE#         61
@@ -340,9 +340,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:1523H         LINE#         70
   -------         ENDPROC       TASK4
   -------         PROC          TASK5
-  -------         DO            
+  -------         DO
   D:0026H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:1524H         LINE#         72
   C:1524H         LINE#         73
   C:1524H         LINE#         75
@@ -356,9 +356,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:153FH         LINE#         84
   -------         ENDPROC       TASK5
   -------         PROC          TASK6
-  -------         DO            
+  -------         DO
   D:0027H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
 BL51 BANKED LINKER/LOCATER V6.22                                                      02/05/2024  00:41:52  PAGE 7
 
 
@@ -375,9 +375,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:155BH         LINE#         98
   -------         ENDPROC       TASK6
   -------         PROC          TASK7
-  -------         DO            
+  -------         DO
   D:0028H         SYMBOL        task1_tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:155CH         LINE#         100
   C:155CH         LINE#         101
   C:155CH         LINE#         103
@@ -396,9 +396,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:0020H         LINE#         117
   -------         ENDPROC       TASK8
   -------         PROC          MAIN
-  -------         DO            
+  -------         DO
   D:0008H         SYMBOL        tmp
-  -------         ENDDO         
+  -------         ENDDO
   C:0E94H         LINE#         119
   C:0E94H         LINE#         120
   C:0E94H         LINE#         121
@@ -436,9 +436,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:0F62H         LINE#         166
   -------         ENDPROC       MAIN
   -------         PROC          PLATFORM_TIMER_INIT_10US_INTERRUPT
-  -------         DO            
+  -------         DO
   D:0007H         SYMBOL        i
-  -------         ENDDO         
+  -------         ENDDO
   C:1298H         LINE#         171
   C:12A7H         LINE#         175
   C:12B2H         LINE#         176
@@ -448,9 +448,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:12CAH         LINE#         181
   -------         ENDPROC       PLATFORM_TIMER_INIT_10US_INTERRUPT
   -------         PROC          PLATFORM_UART_INTERRUPT
-  -------         DO            
+  -------         DO
   D:0007H         SYMBOL        read
-  -------         ENDDO         
+  -------         ENDDO
   C:1592H         LINE#         186
   C:159BH         LINE#         189
   C:159BH         LINE#         190
@@ -533,10 +533,10 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   -------         ENDPROC       _TINY51_OS_EVENT
   -------         PROC          _PLATFORM_DELAY_XMS
   D:0006H         SYMBOL        ms
-  -------         DO            
+  -------         DO
   D:0005H         SYMBOL        i
   D:0004H         SYMBOL        j
-  -------         ENDDO         
+  -------         ENDDO
   C:15BFH         LINE#         28
   C:15BFH         LINE#         29
 BL51 BANKED LINKER/LOCATER V6.22                                                      02/05/2024  00:41:52  PAGE 10
@@ -646,9 +646,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:162AH         PUBLIC        tiny51_init_task_scheduling
   D:00D0H         PUBLIC        PSW
   -------         PROC          TINY51_TASK_SCHEDULING
-  -------         DO            
+  -------         DO
   D:0009H         SYMBOL        i
-  -------         ENDDO         
+  -------         ENDDO
   C:11F8H         LINE#         10
   C:11F8H         LINE#         11
   C:11F8H         LINE#         14
@@ -671,9 +671,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   -------         PROC          _TINY51_REGISTER_TASK_SCHEDULING
   D:0006H         SYMBOL        task_address
   D:0004H         SYMBOL        task_sleep_ms
-  -------         DO            
+  -------         DO
   D:0002H         SYMBOL        offset
-  -------         ENDDO         
+  -------         ENDDO
   C:142EH         LINE#         28
   C:142EH         LINE#         29
   C:142EH         LINE#         30
@@ -691,9 +691,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   -------         ENDPROC       _TINY51_START_TASK_SCHEDULING
   -------         PROC          _TINY51_RUN_TASK_IN_STACK
   D:000BH         SYMBOL        ready_to_run_address
-  -------         DO            
+  -------         DO
   D:0006H         SYMBOL        p_run
-  -------         ENDDO         
+  -------         ENDDO
   C:000EH         LINE#         41
   C:0012H         LINE#         42
   C:0012H         LINE#         43
@@ -745,9 +745,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   -------         ENDPROC       _EEPROM_WRITE_TO_ADDRESS
   -------         PROC          _EEPROM_READ_FROM_ADDRESS
   D:0009H         SYMBOL        address
-  -------         DO            
+  -------         DO
   D:000AH         SYMBOL        dat
-  -------         ENDDO         
+  -------         ENDDO
   C:13ABH         LINE#         23
   C:13ADH         LINE#         24
   C:13ADH         LINE#         25
@@ -833,9 +833,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   B:00C0H.4       PUBLIC        P44
   D:00D0H         PUBLIC        PSW
   -------         PROC          LCD1602_BUSY_STATE
-  -------         DO            
+  -------         DO
   D:0007H         SYMBOL        busy_state
-  -------         ENDDO         
+  -------         ENDDO
   C:15D5H         LINE#         8
   C:15D5H         LINE#         9
   C:15D5H         LINE#         11
@@ -852,9 +852,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   -------         ENDPROC       LCD1602_BUSY_STATE
   -------         PROC          _LCD1602_WRITE_CMD
   D:0032H         SYMBOL        cmd
-  -------         DO            
+  -------         DO
   D:0033H         SYMBOL        c
-  -------         ENDDO         
+  -------         ENDDO
   C:1343H         LINE#         20
   C:1345H         LINE#         21
   C:1345H         LINE#         22
@@ -884,9 +884,9 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   -------         ENDPROC       _LCD1602_POSITION_X_Y
   -------         PROC          _LCD1602_WRITE_DATA
   D:0034H         SYMBOL        encode
-  -------         DO            
+  -------         DO
   D:0035H         SYMBOL        c
-  -------         ENDDO         
+  -------         ENDDO
   C:1377H         LINE#         48
   C:1379H         LINE#         49
   C:1379H         LINE#         50
@@ -1126,17 +1126,17 @@ SYMBOL TABLE OF MODULE:  main (MAIN)
   C:1666H         PUBLIC        _SendData
   D:00BAH         PUBLIC        P_SW2
   D:00A8H         PUBLIC        IE
-  C:1648H         PUBLIC        RecvData
-  C:168BH         PUBLIC        Start
+  C:1648H         PUBLIC        i2c_read_byte
+  C:168BH         PUBLIC        i2c_start
   C:1639H         PUBLIC        Wait
   D:00B8H         PUBLIC        IP
-  C:169DH         PUBLIC        Stop
+  C:169DH         PUBLIC        i2c_stop
   C:1495H         PUBLIC        i2c_interface_init
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   C:1674H         PUBLIC        SendACK
-  C:1694H         PUBLIC        RecvACK
-  C:1657H         PUBLIC        SendNAK
+  C:1694H         PUBLIC        i2c_receive_device_ack
+  C:1657H         PUBLIC        i2c_host_send_no_ack
   D:00D0H         PUBLIC        PSW
   -------         PROC          I2C_INTERFACE_INIT
 BL51 BANKED LINKER/LOCATER V6.22                                                      02/05/2024  00:41:52  PAGE 20
