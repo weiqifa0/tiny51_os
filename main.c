@@ -11,7 +11,7 @@
 #include "device/led.h"
 #include "device/eeprom.h"
 
-uint8_t g_tmp;
+#define VERSION ("V1.1.1.4")
 
 void task1(void)
 {
@@ -113,12 +113,16 @@ void task7(void)
 
 void task8(void)
 {
-  
+  char buffer[64];
+  char num1 = eeprom_read_from_address(0x12);
+
+  memset(&buffer, 0, sizeof(buffer));
+  sprintf(buffer, "EEPROM: 0x12, VAL: %.2X", (uint8_t)num1);
+  printf("%s\n", buffer);
 }
 
 void main(void)
 {
-  uint8_t tmp = 0;
   led_init();
 
   set_led_num(1, TRUE);
@@ -141,11 +145,11 @@ void main(void)
 
   eeprom_write_to_address(0x12, 0xA9);
 
-
   platform_timer_init_10ms();
   uart_init();
 
   printf("main start...\n");
+  printf("%bs...\n", VERSION);
 
   tiny51_init_task_scheduling();
   tiny51_register_task_scheduling((unsigned int)task1, 3000);
@@ -159,9 +163,6 @@ void main(void)
 
   for (;;) {
     tiny51_task_scheduling();
-    g_tmp = eeprom_read_from_address(0x12);
-    printf("EEPROM READ ADDRESS %bx , VALUE =%bx\n", 0x12, g_tmp);
-    //platform_delay_xms(7000);
   }
 }
 #if COMPLILE_SDCC
