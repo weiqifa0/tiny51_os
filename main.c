@@ -11,6 +11,8 @@
 #include "device/led.h"
 #include "device/eeprom.h"
 
+#include <stdio.h>
+
 #define VERSION ("V1.1.1.4")
 
 void task1(void)
@@ -109,15 +111,18 @@ void task7(void)
     set_led_num(7, FALSE);
   }
   task1_tmp = !task1_tmp;
+  printf("task7_tmp = %bd\n", task1_tmp);
 }
 
 void task8(void)
 {
   char buffer[64];
-  char num1 = eeprom_read_from_address(0x12);
+  uint8_t num1 = eeprom_read_from_address(0x12);
 
-  memset(&buffer, 0, sizeof(buffer));
-  sprintf(buffer, "EEPROM: 0x12, VAL: %.2X", (uint8_t)num1);
+  printf("num1 = 0x%bx\n", num1);
+
+//  memset(&buffer, 0, sizeof(buffer));
+//  sprintf(buffer, "EEPROM: 0x12, VAL: %.2X", (uint8_t)num1);
   printf("%s\n", buffer);
 }
 

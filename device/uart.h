@@ -4,6 +4,7 @@
 */
 #ifndef __UART_H
 #define __UART_H
+
 #include <stdio.h>
 #include "../chip_platform/platform_head.h"
 
