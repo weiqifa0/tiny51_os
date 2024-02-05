@@ -103,7 +103,15 @@ void task6(void)
 void task7(void)
 {
   char buffer[32];
+  uint16_t temp_int;
   float temp = read_temp_from_m1601();
+  temp_int = temp * 100; // 2548
+  lcd1602_write_char(5, 1, temp_int / 1000 + '0');
+  lcd1602_write_char(6, 1, temp_int % 1000 / 100 + '0');
+  lcd1602_write_char(7, 1, '.');
+  lcd1602_write_char(8, 1, temp_int % 100 / 10 + '0');
+  lcd1602_write_char(9, 1, temp_int % 100 % 10 + '0'); //
+  lcd1602_write_char(10, 1, 'C');
   printf("temp = %bf C\n", temp);
   printf("%s\n", buffer);
 }
