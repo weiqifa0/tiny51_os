@@ -40,10 +40,12 @@ void platform_delay_xms(uint16_t ms)		//@11.0592MHz
 
 void platform_delay_xus(uint16_t us)		//@11.0592MHz
 {
+  unsigned char RAM_RANGE_IDATA i;
   while (us--) {
     __NOP__();
     __NOP__();
-    __NOP__();
+    i = 1;
+    while (--i);
   }
 }
 

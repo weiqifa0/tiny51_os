@@ -6,14 +6,18 @@
 #include "../chip_platform/platform_head.h"
 #include "uart.h"
 
+/*
+ * 115200
+ */
 void uart_init()
 {
   SCON = 0x50;
-  T2L = 0xe8;                                 //65536-11059200/115200/4=0FFE8H
+  T2L = 0xe8;
   T2H = 0xff;
-  AUXR = 0x15;                                //启动定时器
-  ES = 0;                                     //使能串口中断
+  AUXR = 0x15; // timer open
+  ES = 0; // uart irq open
   EA = 1;
+  TI = 1;
 }
 
 void uart_write(char encode)
@@ -29,7 +33,7 @@ void uart_write_str(char * string)
     uart_write(*string++);
 }
 
-extern char putchar(char c)  //printf函数会调用putchar()
+char putchar(char c)
 {
   uart_write(c);
   return c;

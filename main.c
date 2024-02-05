@@ -10,6 +10,7 @@
 #include "module/ring_buff.h"
 #include "device/led.h"
 #include "device/eeprom.h"
+#include "device/m1601.h"
 
 #include <stdio.h>
 
@@ -101,22 +102,15 @@ void task6(void)
 
 void task7(void)
 {
-  static uint8_t task1_tmp = 0;
-  if (task1_tmp)
-  {
-    set_led_num(7, TRUE);
-  }
-  else
-  {
-    set_led_num(7, FALSE);
-  }
-  task1_tmp = !task1_tmp;
-  printf("task7_tmp = %bd\n", task1_tmp);
+  char buffer[32];
+  float temp = read_temp_from_m1601();
+  printf("temp = %bf C\n", temp);
+  printf("%s\n", buffer);
 }
 
 void task8(void)
 {
-  char buffer[64];
+  char buffer[32];
   uint8_t num1 = eeprom_read_from_address(0x12);
 
   printf("num1 = 0x%bx\n", num1);
@@ -153,6 +147,8 @@ void main(void)
   platform_timer_init_10ms();
   uart_init();
 
+  m1601_init();
+
   printf("main start...\n");
   printf("%bs...\n", VERSION);
 
@@ -163,7 +159,7 @@ void main(void)
   tiny51_register_task_scheduling((unsigned int)task4, 700);
   tiny51_register_task_scheduling((unsigned int)task5, 3000);
   tiny51_register_task_scheduling((unsigned int)task6, 200);
-  tiny51_register_task_scheduling((unsigned int)task7, 1000);
+  tiny51_register_task_scheduling((unsigned int)task7, 5000);
   tiny51_register_task_scheduling((unsigned int)task8, 2000);
 
   for (;;) {

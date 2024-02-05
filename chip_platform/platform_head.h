@@ -16,11 +16,11 @@ typedef unsigned int uint16_t;
 
 #if COMPLILE_SDCC
   #include "stc8h8k64u_sdcc.h"
-  typedef __bit bool;
+  typedef __bit BOOL;
   #define __NOP__() __asm__("nop")
   #define RAM_RANGE_IDATA __idata
 #elif COMPLILE_KEIL
-  #define bool sbit
+  #define BOOL bit
   #define __NOP__() _nop_()
   #include "stc8h8k64u_keil.h"
   #include "intrins.h"
