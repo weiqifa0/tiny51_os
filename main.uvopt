@@ -189,10 +189,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>29</ColumnNumber>
+      <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>109</TopLine>
-      <CurrentLine>116</CurrentLine>
+      <TopLine>150</TopLine>
+      <CurrentLine>163</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -212,8 +212,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>70</TopLine>
-      <CurrentLine>70</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\chip_platform\platform_interface.c</PathWithFileName>
       <FilenameWithoutPath>platform_interface.c</FilenameWithoutPath>
@@ -233,8 +233,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>10</TopLine>
-      <CurrentLine>18</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\task_scheduling_core\task_scheduling_core.c</PathWithFileName>
       <FilenameWithoutPath>task_scheduling_core.c</FilenameWithoutPath>
@@ -250,12 +250,12 @@
       <GroupNumber>4</GroupNumber>
       <FileNumber>4</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>7</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>14</TopLine>
-      <CurrentLine>23</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\device\eeprom.c</PathWithFileName>
       <FilenameWithoutPath>eeprom.c</FilenameWithoutPath>
@@ -278,12 +278,12 @@
       <GroupNumber>4</GroupNumber>
       <FileNumber>6</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>25</ColumnNumber>
+      <ColumnNumber>41</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>110</TopLine>
+      <CurrentLine>118</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\device\lcd1602.c</PathWithFileName>
       <FilenameWithoutPath>lcd1602.c</FilenameWithoutPath>
@@ -296,8 +296,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>17</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\device\led.c</PathWithFileName>
       <FilenameWithoutPath>led.c</FilenameWithoutPath>
@@ -316,6 +316,34 @@
       <PathWithFileName>.\device\uart.c</PathWithFileName>
       <FilenameWithoutPath>uart.c</FilenameWithoutPath>
     </File>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\device\m1601.c</PathWithFileName>
+      <FilenameWithoutPath>m1601.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>4</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>18</TopLine>
+      <CurrentLine>32</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\device\digital_tube.c</PathWithFileName>
+      <FilenameWithoutPath>digital_tube.c</FilenameWithoutPath>
+    </File>
   </Group>
 
   <Group>
@@ -331,8 +359,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>3</TopLine>
-      <CurrentLine>6</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\driver\gpio_i2c_interface.c</PathWithFileName>
       <FilenameWithoutPath>gpio_i2c_interface.c</FilenameWithoutPath>
@@ -340,9 +368,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>D:\source\tiny51_os\DEVICE\LCD1602.H</PathWithFilename>
+    <PathWithFilename>D:\source\tiny51_os\device\digital_tube.h</PathWithFilename>
     <TopLine>1</TopLine>
-    <CurrentLine>9</CurrentLine>
+    <CurrentLine>10</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -366,35 +394,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>D:\SOURCE\TINY51_OS\DRIVER\GPIO_I2C_INTERFACE.H</PathWithFilename>
-    <TopLine>12</TopLine>
-    <CurrentLine>17</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>D:\source\tiny51_os\DEVICE\EEPROM.H</PathWithFilename>
+    <PathWithFilename>C:\KEIL\C51\INC\INTRINS.H</PathWithFilename>
     <TopLine>1</TopLine>
-    <CurrentLine>9</CurrentLine>
+    <CurrentLine>1</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -418,35 +420,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>D:\SOURCE\TINY51_OS\CHIP_PLATFORM\STC8H8K64U_KEIL.H</PathWithFilename>
+    <PathWithFilename>D:\source\tiny51_os\CHIP_PLATFORM\STC8H8K64U_KEIL.H</PathWithFilename>
     <TopLine>1</TopLine>
-    <CurrentLine>4</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>D:\source\tiny51_os\TASK_SCHEDULING_CORE\TASK_SCHEDULING_CORE.H</PathWithFilename>
-    <TopLine>21</TopLine>
-    <CurrentLine>24</CurrentLine>
+    <CurrentLine>1</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -496,35 +472,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>D:\source\tiny51_os\DEVICE\UART.H</PathWithFilename>
+    <PathWithFilename>D:\source\tiny51_os\device\lcd1602.h</PathWithFilename>
     <TopLine>1</TopLine>
-    <CurrentLine>7</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>D:\source\tiny51_os\device\m1601.c</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>16</CurrentLine>
+    <CurrentLine>9</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1888,91 +1838,55 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>0</ActiveTab>
+      <ActiveTab>1</ActiveTab>
       <Documents>
         <Doc>
-          <Name>D:\source\tiny51_os\device\m1601.c</Name>
-          <ColumnNumber>22</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>16</CurrentLine>
+          <Name>.\main.c</Name>
+          <ColumnNumber>16</ColumnNumber>
+          <TopLine>150</TopLine>
+          <CurrentLine>163</CurrentLine>
         </Doc>
         <Doc>
-          <Name>DEVICE/UART.H</Name>
+          <Name>.\device\digital_tube.c</Name>
+          <ColumnNumber>32</ColumnNumber>
+          <TopLine>18</TopLine>
+          <CurrentLine>32</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>DEVICE/DIGITAL_TUBE.H</Name>
+          <ColumnNumber>37</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>10</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>C:\KEIL\C51\INC\INTRINS.H</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>7</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>CHIP_PLATFORM/PLATFORM_HEAD.H</Name>
-          <ColumnNumber>33</ColumnNumber>
           <TopLine>1</TopLine>
           <CurrentLine>1</CurrentLine>
         </Doc>
         <Doc>
-          <Name>.\task_scheduling_core\task_scheduling_core.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>10</TopLine>
-          <CurrentLine>18</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>TASK_SCHEDULING_CORE/TASK_SCHEDULING_CORE.H</Name>
-          <ColumnNumber>19</ColumnNumber>
-          <TopLine>21</TopLine>
-          <CurrentLine>24</CurrentLine>
-        </Doc>
-        <Doc>
           <Name>\SOURCE\TINY51_OS\CHIP_PLATFORM\STC8H8K64U_KEIL.H</Name>
-          <ColumnNumber>4</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>4</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\main.c</Name>
-          <ColumnNumber>9</ColumnNumber>
-          <TopLine>157</TopLine>
-          <CurrentLine>165</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>DEVICE/EEPROM.H</Name>
-          <ColumnNumber>31</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>9</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\device\eeprom.c</Name>
-          <ColumnNumber>7</ColumnNumber>
-          <TopLine>14</TopLine>
-          <CurrentLine>23</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\driver\gpio_i2c_interface.c</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>3</TopLine>
-          <CurrentLine>6</CurrentLine>
+          <TopLine>1</TopLine>
+          <CurrentLine>1</CurrentLine>
         </Doc>
         <Doc>
-          <Name>\SOURCE\TINY51_OS\DEVICE\../DRIVER/GPIO_I2C_INTERFACE.H</Name>
+          <Name>CHIP_PLATFORM/PLATFORM_HEAD.H</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>12</TopLine>
-          <CurrentLine>17</CurrentLine>
+          <TopLine>1</TopLine>
+          <CurrentLine>1</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\device\lcd1602.c</Name>
+          <ColumnNumber>41</ColumnNumber>
+          <TopLine>110</TopLine>
+          <CurrentLine>118</CurrentLine>
         </Doc>
         <Doc>
           <Name>DEVICE/LCD1602.H</Name>
           <ColumnNumber>0</ColumnNumber>
           <TopLine>1</TopLine>
           <CurrentLine>9</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\chip_platform\platform_interface.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>70</TopLine>
-          <CurrentLine>70</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\device\led.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>17</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

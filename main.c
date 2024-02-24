@@ -11,8 +11,10 @@
 #include "device/led.h"
 #include "device/eeprom.h"
 #include "device/m1601.h"
+#include "device/digital_tube.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #define VERSION ("V1.1.1.4")
 
@@ -130,6 +132,7 @@ void task8(void)
 
 void main(void)
 {
+  char * p = NULL;
   led_init();
 
   set_led_num(1, TRUE);
@@ -156,6 +159,8 @@ void main(void)
   uart_init();
 
   m1601_init();
+
+  digital_tube_gpio_init();
 
   printf("main start...\n");
   printf("%bs...\n", VERSION);

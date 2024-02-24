@@ -401,6 +401,16 @@
               <FileType>1</FileType>
               <FilePath>.\device\uart.c</FilePath>
             </File>
+            <File>
+              <FileName>m1601.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\m1601.c</FilePath>
+            </File>
+            <File>
+              <FileName>digital_tube.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\digital_tube.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -115,7 +115,7 @@ void lcd1602_gpio_init(void)
   platform_set_gpio_value(7, 4, GPIO_HIGH);
   platform_set_gpio_mode(4, 1, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
   platform_set_gpio_pull_up_resister(4, 1, TRUE);
-  platform_set_gpio_value(4, 1, GPIO_LOW);
+  platform_set_gpio_value(4, 1, GPIO_HIGH);
 
   // 1602 gpio init
   platform_set_gpio_mode(4, 2, GPIO_GENERAL_PURPOSE_INPUT_OUTPUT );
